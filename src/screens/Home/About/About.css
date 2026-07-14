@@ -1,0 +1,56 @@
+.about-container {
+  max-width: 500px;
+  margin: 3rem auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+}
+
+.about-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--primary-blue, #1a73e8);
+  text-align: center;
+}
+
+.about-section {
+  margin-bottom: 2rem;
+}
+
+.about-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+
+.about-label {
+  font-weight: 500;
+  color: #555;
+  min-width: 110px;
+}
+
+.about-link {
+  color: var(--primary-blue, #1a73e8);
+  text-decoration: none;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.about-link:hover {
+  text-decoration: underline;
+}
+
+.about-value {
+  color: #222;
+  font-weight: 400;
+}
+
+.about-subtitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
