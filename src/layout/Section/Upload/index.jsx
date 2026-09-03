@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { getSections } from '../../../../store/Section/SectionAction';
 import { uploadFile } from '../../../../store/Upload/UploadAction';
@@ -9,16 +9,16 @@ import './Upload.css';
 import DoesNotExist from '../../../components/DoesNotExist';
 
 const UploadMaterial = () => {
-    const {sectionId} = useParams();
+    const { sectionId } = useParams();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const sections = useSelector(state => state.section.sections);
-    const loading = useSelector(state => state.section.loading);
     const uploadState = useSelector(state => state.upload);
 
     const [file, setFile] = useState(null);
     const fileInputRef = useRef(null);
     const [files, setFiles] = useState([]);
+    const [isDragging, setIsDragging] = useState(false);
 
     useEffect(() => {
         if (!sections || sections.length === 0) {
@@ -46,16 +46,16 @@ const UploadMaterial = () => {
     }, [uploadState.success, uploadState.error, uploadState.message, dispatch]);
 
     useEffect(() => {
-        const section = sections.find(s => s._id === sectionId);
+        const section = sections?.find(s => (s._id || s.id) === sectionId);
         setFiles(section ? section.files || [] : []);
     }, [sections, sectionId]);
 
-    const section = sections.find(s => s._id === sectionId);
-    if (!section) {
-        return <DoesNotExist message="Section not found." />;
+    const section = sections?.find(s => (s._id || s.id) === sectionId);
+    if (!section && sections && sections.length > 0) {
+        return <DoesNotExist message="Study section not found." />;
     }
 
-    const sectionTitle = section.title || 'Section not found';
+    const sectionTitle = section?.title || 'Section';
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0] || null);
@@ -63,18 +63,27 @@ const UploadMaterial = () => {
 
     const handleDrop = (e) => {
         e.preventDefault();
-        setFile(e.dataTransfer.files[0] || null);
+        setIsDragging(false);
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            setFile(e.dataTransfer.files[0]);
+        }
     };
 
     const handleDragOver = (e) => {
         e.preventDefault();
+        setIsDragging(true);
+    };
+
+    const handleDragLeave = (e) => {
+        e.preventDefault();
+        setIsDragging(false);
     };
 
     const handleBoxClick = () => {
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
         }
-        fileInputRef.current.click();
+        fileInputRef.current?.click();
     };
 
     const handleUploadFiles = async () => {
@@ -90,35 +99,64 @@ const UploadMaterial = () => {
         if (fileInputRef.current) fileInputRef.current.value = '';
     };
 
+    const formatFileSize = (bytes) => {
+        if (!bytes) return '';
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    };
+
     return (
-        <div className="upload-page">
-            <div className="upload-back-link" onClick={() => navigate(`/section/${sectionId}`)}>&larr; Back to {sectionTitle}</div>
-            <div className="upload-title-row">
-                <span className="upload-title-icon" role="img" aria-label="upload">🗂️</span>
-                <h1 className="upload-title">Upload Material</h1>
+        <div className="upload-page-container">
+            {/* Header Navigation */}
+            <div className="upload-header-nav">
+                <Link to={`/section/${sectionId}`} className="workspace-back-btn">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    <span>Back to {sectionTitle}</span>
+                </Link>
             </div>
-            <div className="upload-subtitle">Add new content to {sectionTitle}</div>
-            <div className="upload-box-outer">
+
+            <div className="upload-hero">
+                <div className="workspace-badge" style={{ backgroundColor: 'rgba(16, 185, 129, 0.12)', color: '#10b981' }}>
+                    <span className="badge-dot" style={{ backgroundColor: '#10b981', boxShadow: '0 0 8px #10b981' }}></span>
+                    <span>Document Upload</span>
+                </div>
+                <h1 className="upload-hero-title">Upload Study Material</h1>
+                <p className="upload-hero-desc">
+                    Attach PDF lecture notes, textbooks, and syllabus files to {sectionTitle}.
+                </p>
+            </div>
+
+            {/* Upload Box Card */}
+            <div className="upload-card">
                 <div
-                    className="upload-box"
+                    className={`upload-dropzone ${isDragging ? 'dragging' : ''}`}
                     onClick={handleBoxClick}
                     onDrop={handleDrop}
                     onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => { if (e.key === 'Enter') handleBoxClick(); }}
                 >
-                    <div className="upload-box-icon">
-                        <svg width="48" height="48" fill="none" stroke="#94a3b8" strokeWidth="2.5" viewBox="0 0 48 48">
-                            <path d="M24 36V12M24 12l-8 8M24 12l8 8" strokeLinecap="round" strokeLinejoin="round"/>
-                            <rect x="8" y="36" width="32" height="4" rx="2" fill="#e5e7eb"/>
+                    <div className="dropzone-icon-bubble">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
                         </svg>
                     </div>
-                    <div className="upload-box-title">Upload Your Files</div>
-                    <div className="upload-box-desc">Drag and drop files here or click to browse</div>
+                    <h3 className="dropzone-title">Drag & drop your PDF file here</h3>
+                    <p className="dropzone-hint">Supports PDF documents up to 50MB</p>
                     <button
-                        className="upload-choose-btn"
+                        className="btn btn-secondary browse-files-btn"
                         type="button"
-                        onClick={e => { e.stopPropagation(); handleBoxClick(); }}
+                        onClick={(e) => { e.stopPropagation(); handleBoxClick(); }}
                     >
-                        Choose Files
+                        Browse Files
                     </button>
                     <input
                         type="file"
@@ -128,36 +166,71 @@ const UploadMaterial = () => {
                         accept=".pdf"
                     />
                 </div>
+
+                {/* Selected File Preview */}
                 {file && (
-                    <div className="upload-file-list">
-                        <div className="upload-file-item file-item-row">
-                            <span>{file.name}</span>
-                            <button
-                                type="button"
-                                className="remove-file-btn"
-                                onClick={handleRemoveFile}
-                                aria-label={`Remove ${file.name}`}
-                            >
-                                &times;
-                            </button>
+                    <div className="selected-file-card">
+                        <div className="selected-file-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10 9 9 9 8 9"/>
+                            </svg>
                         </div>
+                        <div className="selected-file-info">
+                            <span className="selected-file-name">{file.name}</span>
+                            <span className="selected-file-size">{formatFileSize(file.size)}</span>
+                        </div>
+                        <button
+                            type="button"
+                            className="remove-file-icon-btn"
+                            onClick={handleRemoveFile}
+                            aria-label={`Remove ${file.name}`}
+                        >
+                            &times;
+                        </button>
                     </div>
                 )}
+
+                {/* Upload Action Button */}
                 <button
-                    className="upload-btn"
+                    className="btn btn-primary upload-submit-btn"
                     type="button"
                     onClick={handleUploadFiles}
                     disabled={!file || uploadState.loading}
                 >
-                    {uploadState.loading ? 'Uploading...(This may take a while)' : 'Upload'}
+                    {uploadState.loading ? (
+                        <>
+                            <span className="btn-spinner"></span>
+                            <span>Processing & Uploading...</span>
+                        </>
+                    ) : (
+                        'Upload Document'
+                    )}
                 </button>
             </div>
+
+            {/* Uploaded Documents List */}
             {files && files.length > 0 && (
-                <div className="uploaded-files-list">
-                    <h3>Uploaded Files</h3>
-                    <ul>
+                <div className="uploaded-documents-card">
+                    <h2 className="uploaded-heading">
+                        <span>Uploaded Documents</span>
+                        <span className="badge">{files.length}</span>
+                    </h2>
+                    <ul className="uploaded-items-list">
                         {files.map((fname, idx) => (
-                            <li key={idx}>{fname}</li>
+                            <li key={idx} className="uploaded-item-row">
+                                <div className="doc-icon">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14 2 14 8 20 8"/>
+                                    </svg>
+                                </div>
+                                <span className="doc-name">{fname}</span>
+                                <span className="doc-ready-pill">Ready</span>
+                            </li>
                         ))}
                     </ul>
                 </div>

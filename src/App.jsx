@@ -3,6 +3,7 @@ import Navbar from './layout/Navbar'
 import SignUp from './screens/Sign/SignUp'
 import Login from './screens/Sign/Login'
 import ForgotPassword from "./screens/Sign/Login/ForgotPassword";
+import ResetPassword from "./screens/Sign/Login/ResetPassword";
 import SectionContainer from './layout/Home/SectionContainer'
 import './App.css'
 import { useEffect } from 'react';
@@ -39,6 +40,7 @@ function App() {
           <Route path='/signup'  element={<SignUp/>}/>
           <Route path='/login' element={<Login/>} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />}/>
           <Route path='/profile' element={<Profile/>} />
           <Route path='/section/:sectionId' element={<DashboardCards/>} />
           <Route path='/section/:sectionId/upload' element={<UploadMaterial/>} />

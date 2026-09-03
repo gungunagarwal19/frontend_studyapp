@@ -4,19 +4,23 @@ import { BrowserRouter } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { Provider } from 'react-redux'
 import store from '../store/Store'
+import { ThemeProvider } from './context/ThemeContext'
 import './index.css'
 import App from './App.jsx'
-import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
-axios.defaults.withCredentials = true;
+import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios'
+axios.defaults.withCredentials = true
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-        <ToastContainer/>
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          <App />
+          <ToastContainer />
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   </StrictMode>,
 )
+

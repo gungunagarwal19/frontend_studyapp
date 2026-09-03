@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './FlashCard.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { fetchReviewCards, swipeFlashCard } from '../../../../store/FlashCard/FlashCardAction';
 import { getSections } from '../../../../store/Section/SectionAction';
+import Loading from '../../../components/Loading';
 
 const FlashCard = () => {
     const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const FlashCard = () => {
       }
     }, [dispatch, sections]);
 
-    const section = sections && sections.find(s => s._id === sectionId);
+    const section = sections && sections.find(s => (s._id || s.id) === sectionId);
     const sectionTitle = section ? section.title : 'Section';
 
     const changeCard = (direction, swipeDirection) => {
@@ -41,7 +42,7 @@ const FlashCard = () => {
         }));
         setIsFlipped(false);
         setSlideDirection('current');
-      }, 600); 
+      }, 500); 
     };
 
     useEffect(() => {
@@ -79,58 +80,153 @@ const FlashCard = () => {
       };
 
       window.addEventListener('keydown', handleKeyPress);
-
       return () => {
         window.removeEventListener('keydown', handleKeyPress);
       };
     }, [slideDirection, currentCard, loading]);
 
-    useEffect(() => {
-      if (reviewCards && reviewCards.length > 0) {
-        console.log('[FlashCard] reviewCards IDs:', reviewCards.map(card => card._id));
-      } else {
-        console.log('[FlashCard] reviewCards is empty');
-      }
-    }, [reviewCards]);
-
     return (
-      <div className="flashcard-viewport">
-        <div
-          className="flashcard-back-link"
-          onClick={() => navigate(`/section/${sectionId}`)}
-          style={{ cursor: 'pointer', color: '#22223b', fontSize: '1.05rem', marginBottom: 32, marginTop: 48, display: 'inline-block', fontWeight: 500 }}
-        >
-          &larr; Back to {sectionTitle}
+      <div className="flashcard-workspace-root">
+        {/* Navigation Back Link */}
+        <div className="flashcard-nav-header">
+          <Link to={`/section/${sectionId}`} className="workspace-back-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back to {sectionTitle}</span>
+          </Link>
         </div>
-        <div className="flashcard-container">
-          {loading && <p>Loading cards...</p>}
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-          {(!loading && !currentCard) ? (
-            <p>Session Complete! No flashcards available for review.</p>
-          ) : (
-            <div 
-              className={`flashcard ${slideDirection} ${isFlipped ? 'flipped' : ''}`}
-              onClick={() => setIsFlipped(!isFlipped)}
-            >
-              <div className="card-front">
-                <p>{currentCard?.question}</p>
+
+        <div className="flashcard-hero-header">
+          <div className="workspace-badge" style={{ backgroundColor: 'rgba(99, 102, 241, 0.12)', color: '#6366f1' }}>
+            <span className="badge-dot" style={{ backgroundColor: '#6366f1', boxShadow: '0 0 8px #6366f1' }}></span>
+            <span>Spaced Repetition</span>
+          </div>
+          <h1 className="flashcard-page-title">Interactive Flashcards</h1>
+          <p className="flashcard-page-desc">
+            Flip cards to review concepts and rate your recall using keyboard shortcuts.
+          </p>
+        </div>
+
+        {/* Flashcard Area */}
+        <div className="flashcard-stage-container">
+          {loading && <Loading />}
+
+          {error && (
+            <div className="alert-error-box" style={{ maxWidth: 440, margin: '2rem auto' }}>
+              <span>{error}</span>
+            </div>
+          )}
+
+          {!loading && !currentCard ? (
+            <div className="flashcard-complete-card">
+              <div className="complete-icon-bubble">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
               </div>
-              <div className="card-back">
-                <p>{currentCard?.answer}</p>
+              <h2 className="complete-title">Session Complete! 🎉</h2>
+              <p className="complete-desc">
+                Great job! You have reviewed all available flashcards in this study section.
+              </p>
+              <button
+                className="btn btn-primary"
+                onClick={() => navigate(`/section/${sectionId}`)}
+              >
+                Back to Section Workspace
+              </button>
+            </div>
+          ) : !loading && currentCard && (
+            <div className="flashcard-interactive-wrapper">
+              {/* 3D Flip Card */}
+              <div 
+                className={`modern-flashcard ${slideDirection} ${isFlipped ? 'flipped' : ''}`}
+                onClick={() => setIsFlipped(!isFlipped)}
+                role="button"
+                tabIndex={0}
+                aria-label="Flashcard. Click or press space to flip."
+              >
+                {/* Front Side (Question) */}
+                <div className="flashcard-face flashcard-front">
+                  <div className="face-tag-row">
+                    <span className="face-pill face-pill-question">QUESTION</span>
+                    <span className="face-flip-hint">Click or press SPACE to flip ⟳</span>
+                  </div>
+                  <div className="face-text-content">
+                    <p>{currentCard?.question}</p>
+                  </div>
+                </div>
+
+                {/* Back Side (Answer) */}
+                <div className="flashcard-face flashcard-back">
+                  <div className="face-tag-row">
+                    <span className="face-pill face-pill-answer">ANSWER</span>
+                    <span className="face-flip-hint">Click or press SPACE to flip ⟳</span>
+                  </div>
+                  <div className="face-text-content">
+                    <p>{currentCard?.answer}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* On-screen quick rating buttons */}
+              <div className="card-rating-actions">
+                <button 
+                  type="button" 
+                  className="rating-action-btn btn-forgot"
+                  onClick={() => changeCard('exit-right', 'right')}
+                  title="Press Right Arrow"
+                >
+                  <span className="key-kbd">→</span>
+                  <span>Didn’t Remember</span>
+                </button>
+
+                <button 
+                  type="button" 
+                  className="rating-action-btn btn-hard"
+                  onClick={() => changeCard('exit-left', 'left')}
+                  title="Press Left Arrow"
+                >
+                  <span className="key-kbd">←</span>
+                  <span>Difficult</span>
+                </button>
+
+                <button 
+                  type="button" 
+                  className="rating-action-btn btn-good"
+                  onClick={() => changeCard('exit-up', 'up')}
+                  title="Press Up Arrow"
+                >
+                  <span className="key-kbd">↑</span>
+                  <span>Almost Got It</span>
+                </button>
+
+                <button 
+                  type="button" 
+                  className="rating-action-btn btn-perfect"
+                  onClick={() => changeCard('exit-down', 'down')}
+                  title="Press Down Arrow"
+                >
+                  <span className="key-kbd">↓</span>
+                  <span>Perfect Recall</span>
+                </button>
+              </div>
+
+              {/* Keyboard Instructions Bar */}
+              <div className="keyboard-instructions-legend">
+                <span className="legend-title">Keyboard Shortcuts:</span>
+                <div className="legend-keys-list">
+                  <span className="legend-item"><kbd className="key-badge">SPACE</kbd> Flip card</span>
+                  <span className="legend-item"><kbd className="key-badge">→</kbd> Didn’t remember</span>
+                  <span className="legend-item"><kbd className="key-badge">←</kbd> Difficult</span>
+                  <span className="legend-item"><kbd className="key-badge">↑</kbd> Almost</span>
+                  <span className="legend-item"><kbd className="key-badge">↓</kbd> Perfect</span>
+                </div>
               </div>
             </div>
           )}
-          <p className="instructions">
-            Press <b>SPACE</b> to flip the card.<br/>
-            Use the arrow keys to show how well you remembered:
-            <br/>
-            <span style={{display: 'inline-block', marginTop: '0.5em'}}>
-              <b>→</b> Didn’t remember &nbsp;|&nbsp; 
-              <b>←</b> Difficult &nbsp;|&nbsp; 
-              <b>↑</b> Almost got it &nbsp;|&nbsp; 
-              <b>↓</b> Perfect recall
-            </span>
-          </p>
         </div>
       </div>
     );    

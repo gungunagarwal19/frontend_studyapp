@@ -12,15 +12,12 @@ const SectionContainer = () => {
     const navigate = useNavigate();
     const {
         loading,
-        success,
-        error,
-        message,
-        currentSection,
         isAuthenticated,
         user
     } = useSelector(state => state.user);
 
-    const sections = useSelector((state) => state.section.sections)
+    const sections = useSelector((state) => state.section.sections);
+    const sectionLoading = useSelector((state) => state.section.loading);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newCardTitle, setNewCardTitle] = useState('');
@@ -29,13 +26,11 @@ const SectionContainer = () => {
     const [selectedSection, setSelectedSection] = useState('All Sections');
     const [searchQuery, setSearchQuery] = useState('');
 
-
     useEffect(() => {
         if (isAuthenticated) {
             dispatch(getSections());
         }
-    }, [dispatch, isAuthenticated]); 
-
+    }, [dispatch, isAuthenticated]);
 
     const filteredSections = sections?.filter(section => {
         const matchesSearch = section.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -48,6 +43,11 @@ const SectionContainer = () => {
     };
 
     const handleAddCard = () => {
+        if (!isAuthenticated) {
+            toast.info("Please login to create study sections");
+            navigate("/login");
+            return;
+        }
         setIsModalOpen(true);
     };
 
@@ -58,11 +58,11 @@ const SectionContainer = () => {
         }
         if (newCardTitle.trim()) {
             dispatch(addSection({
-                title: newCardTitle,
-                description: newCardDescription
+                title: newCardTitle.trim(),
+                description: newCardDescription.trim()
             }));
             setNewCardTitle('');
-            setNewCardDescription('')
+            setNewCardDescription('');
             setIsModalOpen(false);
         }
     };
@@ -91,133 +91,228 @@ const SectionContainer = () => {
     };
 
     return (
-        <div>
-            <div className="section-header">
-                <h1>Study Sections</h1>
-                <div>
-                    Manage your study materials and flashcard collections
+        <div className="section-container-root">
+            {/* Hero & Header Section */}
+            <div className="dashboard-hero">
+                <div className="hero-badge">
+                    <span className="hero-badge-dot"></span>
+                    <span>Smart Study Workspace</span>
                 </div>
-                <div className="section-header-row">
-                    <div className="search-container">
+                
+                <h1 className="hero-title">
+                    {isAuthenticated && user?.name 
+                        ? `Welcome back, ${user.name.split(' ')[0]} 👋` 
+                        : "Empower Your Learning"}
+                </h1>
+                
+                <p className="hero-description">
+                    Organize your course materials, review interactive 3D flashcards, and get instant explanations with AI.
+                </p>
+
+                {/* Search & Actions Bar */}
+                <div className="dashboard-toolbar">
+                    <div className="search-bar-wrapper">
+                        <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.3-4.3"/>
+                        </svg>
                         <input
                             type="text"
-                            className="section-search-input"
-                            placeholder="Search sections..."
+                            className="dashboard-search-input"
+                            placeholder="Search study sections..."
                             value={searchQuery}
                             onChange={handleSearch}
+                            aria-label="Search sections"
                         />
                         {searchQuery && (
                             <button 
-                                className="clear-search"
+                                className="clear-search-btn"
                                 onClick={() => setSearchQuery('')}
-                                aria-label="Clear search"
+                                aria-label="Clear search query"
                             >
-                                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                    <path d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
+                                &times;
                             </button>
                         )}
                     </div>
-                    <div 
-                        className="filter-dropdown" 
-                        onClick={handleShowSections} 
-                        tabIndex={0}
-                        data-open={isDropdownOpen}
-                    >
-                        <span className="filter-icon">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                <path d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-.293.707l-6.414 6.414A1 1 0 0 0 14 13.414V19a1 1 0 0 1-1.447.894l-4-2A1 1 0 0 1 8 17v-3.586a1 1 0 0 0-.293-.707L1.293 6.707A1 1 0 0 1 1 6V4z"/>
+
+                    <div className="toolbar-actions-group">
+                        {/* Filter Dropdown */}
+                        <div 
+                            className="filter-dropdown-trigger" 
+                            onClick={handleShowSections} 
+                            tabIndex={0}
+                            role="button"
+                            aria-haspopup="listbox"
+                            aria-expanded={isDropdownOpen}
+                        >
+                            <svg className="filter-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
                             </svg>
-                        </span>
-                        <span>{selectedSection}</span>
-                        <span className="dropdown-arrow">
-                            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                <path d="M19 9l-7 7-7-7"/>
+                            <span className="filter-selected-label">{selectedSection}</span>
+                            <svg className={`filter-arrow ${isDropdownOpen ? 'open' : ''}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="m6 9 6 6 6-6"/>
                             </svg>
-                        </span>
-                        {isDropdownOpen && (
-                            <div className="section-dropdown-menu">
-                                <div 
-                                    className={`section-dropdown-item ${selectedSection === 'All Sections' ? 'active' : ''}`}
-                                    onClick={() => handleSelectSection('All Sections')}
-                                >
-                                    All Sections
-                                </div>
-                                {sections && sections.map(section => (
-                                    <div
-                                        className={`section-dropdown-item ${selectedSection === section.title ? 'active' : ''}`}
-                                        key={section._id || section.id}
-                                        onClick={() => handleSelectSection(section.title)}
+
+                            {isDropdownOpen && (
+                                <div className="dropdown-menu-list" role="listbox">
+                                    <div 
+                                        className={`dropdown-menu-item ${selectedSection === 'All Sections' ? 'active' : ''}`}
+                                        onClick={() => handleSelectSection('All Sections')}
+                                        role="option"
+                                        aria-selected={selectedSection === 'All Sections'}
                                     >
-                                        {section.title}
+                                        <span>All Sections</span>
+                                        {selectedSection === 'All Sections' && <span className="checkmark">✓</span>}
                                     </div>
-                                ))}
-                            </div>
-                        )}
+                                    {sections && sections.map(section => (
+                                        <div
+                                            className={`dropdown-menu-item ${selectedSection === section.title ? 'active' : ''}`}
+                                            key={section._id || section.id}
+                                            onClick={() => handleSelectSection(section.title)}
+                                            role="option"
+                                            aria-selected={selectedSection === section.title}
+                                        >
+                                            <span>{section.title}</span>
+                                            {selectedSection === section.title && <span className="checkmark">✓</span>}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* New Section Button */}
+                        <button
+                            className="btn btn-primary create-section-btn"
+                            onClick={handleAddCard}
+                        >
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                <path d="M5 12h14"/>
+                                <path d="M12 5v14"/>
+                            </svg>
+                            <span>New Section</span>
+                        </button>
                     </div>
-                    <button
-                        className="new-section-btn"
-                        onClick={handleAddCard}
-                    >
-                        + New Section
-                    </button>
                 </div>
             </div>
 
-            <div className="card-grid">
-                {loading && <Loading/>}
-                {!loading && filteredSections?.length === 0 && (
-                    <div className="no-results">
-                        <p>No sections found matching your search.</p>
-                    </div>
-                )}
-                {filteredSections && filteredSections.map(section => (
-                    <Section
-                        key={section._id || section.id}
-                        title={section.title}
-                        description={section.description}
-                        onClick={() => handleCardClick(section._id || section.id)}
-                        onDelete={() => handleDeleteCard(section._id || section.id)}
-                    />
-                ))}
+            {/* Sections Grid or States */}
+            {(loading || sectionLoading) && <Loading />}
 
-                {isModalOpen && (
-                    <div className="modal-overlay">
-                        <form className="modal-content" onSubmit={e => { e.preventDefault(); handleCreateCard(); }}>
-                            <h2 className="modal-title">Create New Card</h2>
-                            <input
-                                type="text"
-                                className="modal-input"
-                                placeholder="Enter card title"
-                                value={newCardTitle}
-                                onChange={(e) => setNewCardTitle(e.target.value)}
-                                autoFocus
-                            />
-                            <input
-                                type="text"
-                                className="modal-input"
-                                placeholder="Enter card description"
-                                value={newCardDescription}
-                                onChange={(e) => setNewCardDescription(e.target.value)}
-                            />
-                            <div className="modal-buttons">
-                                <button type="button" className="modal-button cancel" onClick={handleCancel}>
+            {!loading && !sectionLoading && filteredSections?.length === 0 && (
+                <div className="empty-sections-state">
+                    <div className="empty-state-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                            <path d="M9 10h6"/>
+                            <path d="M9 14h4"/>
+                        </svg>
+                    </div>
+                    <h3 className="empty-state-title">
+                        {searchQuery ? "No matching sections found" : "No study sections yet"}
+                    </h3>
+                    <p className="empty-state-desc">
+                        {searchQuery 
+                            ? "Try checking your spelling or clearing the search filter." 
+                            : "Create your first study section to upload documents, review flashcards, and chat with AI."}
+                    </p>
+                    {searchQuery ? (
+                        <button className="btn btn-secondary" onClick={() => setSearchQuery('')}>
+                            Clear Search
+                        </button>
+                    ) : (
+                        <button className="btn btn-primary" onClick={handleAddCard}>
+                            + Create First Section
+                        </button>
+                    )}
+                </div>
+            )}
+
+            {!loading && !sectionLoading && filteredSections && filteredSections.length > 0 && (
+                <div className="sections-grid">
+                    {filteredSections.map(section => (
+                        <Section
+                            key={section._id || section.id}
+                            title={section.title}
+                            description={section.description}
+                            onClick={() => handleCardClick(section._id || section.id)}
+                            onDelete={() => handleDeleteCard(section._id || section.id)}
+                        />
+                    ))}
+                </div>
+            )}
+
+            {/* Create New Section Modal */}
+            {isModalOpen && (
+                <div className="modal-backdrop" onClick={handleCancel}>
+                    <div className="modal-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+                        <div className="modal-header">
+                            <div className="modal-header-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M12 5v14"/>
+                                    <path d="M5 12h14"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 className="modal-title">Create New Study Section</h2>
+                                <p className="modal-subtitle">Add a collection for your course notes and flashcards.</p>
+                            </div>
+                        </div>
+
+                        <form onSubmit={e => { e.preventDefault(); handleCreateCard(); }}>
+                            <div className="modal-form-body">
+                                <div className="modal-form-group">
+                                    <label htmlFor="section-title-input" className="modal-label">
+                                        Section Title <span className="required-star">*</span>
+                                    </label>
+                                    <input
+                                        id="section-title-input"
+                                        type="text"
+                                        className="modal-input-field"
+                                        placeholder="e.g. Operating Systems, Data Structures, Physics 101"
+                                        value={newCardTitle}
+                                        onChange={(e) => setNewCardTitle(e.target.value)}
+                                        autoFocus
+                                        required
+                                    />
+                                </div>
+
+                                <div className="modal-form-group">
+                                    <label htmlFor="section-desc-input" className="modal-label">
+                                        Description <span className="optional-tag">(optional)</span>
+                                    </label>
+                                    <textarea
+                                        id="section-desc-input"
+                                        className="modal-textarea-field"
+                                        placeholder="Brief summary of what this study section covers..."
+                                        value={newCardDescription}
+                                        onChange={(e) => setNewCardDescription(e.target.value)}
+                                        rows={3}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="modal-actions-row">
+                                <button 
+                                    type="button" 
+                                    className="btn btn-secondary" 
+                                    onClick={handleCancel}
+                                >
                                     Cancel
                                 </button>
                                 <button 
-                                    type="submit"
-                                    className="modal-button create"
-                                    disabled={loading}
+                                    type="submit" 
+                                    className="btn btn-primary"
+                                    disabled={loading || !newCardTitle.trim()}
                                 >
-                                    {loading ? 'Creating...' : 'Create'}
+                                    {loading ? 'Creating...' : 'Create Section'}
                                 </button>
                             </div>
                         </form>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 };
 
-export default SectionContainer; 
+export default SectionContainer;
