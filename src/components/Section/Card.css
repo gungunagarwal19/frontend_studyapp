@@ -16,40 +16,40 @@
 
 .study-section-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--card-shadow-hover);
-  border-color: var(--border-strong);
+  box-shadow: 0 16px 32px -4px rgba(0, 0, 0, 0.5), 0 0 16px -2px rgba(45, 212, 191, 0.15);
+  border-color: rgba(45, 212, 191, 0.4);
 }
 
 .study-section-card:focus-visible {
   box-shadow: 0 0 0 3px var(--input-focus-ring);
-  border-color: var(--mauve-soft);
+  border-color: var(--accent-teal);
 }
 
-/* Card Top Accent */
+/* Card Top Accent - Subtle Teal Accents */
 .card-top-accent {
-  height: 4px;
+  height: 3px;
   width: 100%;
-  background: var(--primary-gradient);
+  background: linear-gradient(90deg, #2DD4BF, #14B8A6);
 }
 
 .study-section-card.accent-blue .card-top-accent {
-  background: linear-gradient(90deg, #E8A7B8, #C99ACB);
+  background: linear-gradient(90deg, #2DD4BF, #06B6D4);
 }
 
 .study-section-card.accent-indigo .card-top-accent {
-  background: linear-gradient(90deg, #C99ACB, #9B7FD3);
+  background: linear-gradient(90deg, #06B6D4, #3B82F6);
 }
 
 .study-section-card.accent-purple .card-top-accent {
-  background: linear-gradient(90deg, #9B7FD3, #B8A5E3);
+  background: linear-gradient(90deg, #2DD4BF, #10B981);
 }
 
 .study-section-card.accent-emerald .card-top-accent {
-  background: linear-gradient(90deg, #F5C6D2, #C99ACB);
+  background: linear-gradient(90deg, #10B981, #2DD4BF);
 }
 
 .study-section-card.accent-amber .card-top-accent {
-  background: linear-gradient(90deg, #E8A7B8, #9B7FD3);
+  background: linear-gradient(90deg, #2DD4BF, #14B8A6);
 }
 
 .card-inner {
@@ -74,7 +74,7 @@
   height: 38px;
   border-radius: var(--radius-md);
   background-color: var(--badge-bg);
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
   border: 1px solid var(--badge-border);
 }
 
@@ -107,7 +107,7 @@
   justify-content: space-between;
   padding-top: 0.85rem;
   border-top: 1px solid var(--border-subtle);
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
   font-family: var(--font-heading);
   font-size: 0.88rem;
   font-weight: 600;

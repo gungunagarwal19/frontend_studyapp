@@ -24,7 +24,7 @@
 
 .workspace-back-btn:hover {
   background-color: var(--bg-surface-subtle);
-  color: var(--pink-blush);
+  color: var(--accent-teal);
 }
 
 .workspace-hero {
@@ -38,7 +38,7 @@
   padding: 0.35rem 0.85rem;
   border-radius: var(--radius-full);
   background-color: var(--badge-bg);
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
   border: 1px solid var(--badge-border);
   font-family: var(--font-heading);
   font-size: 0.82rem;
@@ -51,8 +51,8 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: var(--pink-blush);
-  box-shadow: 0 0 8px var(--pink-blush);
+  background-color: var(--accent-teal);
+  box-shadow: 0 0 8px var(--accent-teal);
 }
 
 .workspace-title {
@@ -80,7 +80,7 @@
 
 .workspace-feature-card {
   background-color: var(--card-bg);
-  border: 1.5px solid var(--card-border);
+  border: 1px solid var(--card-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--card-shadow);
   padding: 2rem 1.75rem;
@@ -95,13 +95,13 @@
 
 .workspace-feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--card-shadow-hover);
-  border-color: var(--border-strong);
+  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.5), 0 0 16px -2px rgba(45, 212, 191, 0.15);
+  border-color: rgba(45, 212, 191, 0.4);
 }
 
 .workspace-feature-card:focus-visible {
   box-shadow: 0 0 0 3px var(--input-focus-ring);
-  border-color: var(--mauve-soft);
+  border-color: var(--accent-teal);
 }
 
 .feature-card-badge {
@@ -121,41 +121,41 @@
 
 /* 1. Flashcards Feature */
 .feature-flashcards .feature-card-badge {
-  background: linear-gradient(135deg, #E8A7B8, #C99ACB);
-  color: #10172A;
-  box-shadow: 0 4px 14px rgba(232, 167, 184, 0.35);
+  background: linear-gradient(135deg, #2DD4BF, #14B8A6);
+  color: #0B1020;
+  box-shadow: 0 4px 14px rgba(45, 212, 191, 0.35);
 }
 
 .pill-indigo {
-  background-color: rgba(232, 167, 184, 0.12);
-  color: var(--pink-blush);
-  border: 1px solid rgba(232, 167, 184, 0.25);
+  background-color: rgba(45, 212, 191, 0.12);
+  color: var(--accent-teal);
+  border: 1px solid rgba(45, 212, 191, 0.25);
 }
 
 /* 2. Chat Feature */
 .feature-chat .feature-card-badge {
-  background: linear-gradient(135deg, #C99ACB, #9B7FD3);
-  color: #10172A;
-  box-shadow: 0 4px 14px rgba(201, 154, 203, 0.35);
+  background: linear-gradient(135deg, #06B6D4, #0D9488);
+  color: #0B1020;
+  box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
 }
 
 .pill-purple {
-  background-color: rgba(201, 154, 203, 0.12);
-  color: var(--mauve-soft);
-  border: 1px solid rgba(201, 154, 203, 0.25);
+  background-color: rgba(6, 182, 212, 0.12);
+  color: #06B6D4;
+  border: 1px solid rgba(6, 182, 212, 0.25);
 }
 
 /* 3. Upload Feature */
 .feature-upload .feature-card-badge {
-  background: linear-gradient(135deg, #9B7FD3, #B8A5E3);
-  color: #10172A;
-  box-shadow: 0 4px 14px rgba(155, 127, 211, 0.35);
+  background: linear-gradient(135deg, #3B82F6, #2DD4BF);
+  color: #0B1020;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
 }
 
 .pill-emerald {
-  background-color: rgba(155, 127, 211, 0.12);
-  color: var(--lavender-soft);
-  border: 1px solid rgba(155, 127, 211, 0.25);
+  background-color: rgba(59, 130, 246, 0.12);
+  color: #38BDF8;
+  border: 1px solid rgba(59, 130, 246, 0.25);
 }
 
 .feature-pill {
@@ -190,7 +190,7 @@
   font-family: var(--font-heading);
   font-size: 0.92rem;
   font-weight: 600;
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
   transition: color var(--transition-fast);
 }
 

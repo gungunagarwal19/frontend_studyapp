@@ -20,7 +20,7 @@
   border-radius: var(--radius-full);
   background-color: var(--badge-bg);
   border: 1px solid var(--badge-border);
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
   font-family: var(--font-heading);
   font-size: 0.82rem;
   font-weight: 700;
@@ -32,8 +32,8 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: var(--pink-blush);
-  box-shadow: 0 0 8px var(--pink-blush);
+  background-color: var(--accent-teal);
+  box-shadow: 0 0 8px var(--accent-teal);
 }
 
 .hero-title {
@@ -46,7 +46,7 @@
 }
 
 .hero-description {
-  font-size: 1.08rem;
+  font-size: 1.05rem;
   color: var(--text-secondary);
   line-height: 1.6;
   max-width: 620px;
@@ -84,7 +84,7 @@
   height: 46px;
   padding: 0.75rem 2.5rem 0.75rem 2.85rem;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--input-border);
+  border: 1px solid var(--input-border);
   background-color: var(--input-bg);
   color: var(--input-text);
   font-family: var(--font-body);
@@ -96,6 +96,7 @@
 .dashboard-search-input:focus {
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px var(--input-focus-ring);
+  background-color: var(--input-bg);
 }
 
 .clear-search-btn {
@@ -135,7 +136,7 @@
   gap: 0.5rem;
   padding: 0 1.15rem;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--input-border);
+  border: 1px solid var(--input-border);
   background-color: var(--input-bg);
   color: var(--text-primary);
   font-family: var(--font-heading);
@@ -153,7 +154,7 @@
 }
 
 .filter-icon {
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
   flex-shrink: 0;
 }
 
@@ -211,12 +212,12 @@
 
 .dropdown-menu-item.active {
   background-color: var(--badge-bg);
-  color: var(--pink-blush);
+  color: var(--accent-teal);
   font-weight: 600;
 }
 
 .checkmark {
-  color: var(--pink-blush);
+  color: var(--accent-teal);
   font-weight: 700;
 }
 
@@ -229,7 +230,7 @@
   font-weight: 700;
 }
 
-/* Sections Grid — Side by Side rectangular boxes */
+/* Sections Grid */
 .sections-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -237,19 +238,13 @@
   width: 100%;
 }
 
-@media (min-width: 1100px) {
-  .sections-grid {
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  }
-}
-
 /* Empty State */
 .empty-sections-state {
   text-align: center;
   padding: 4.5rem 2rem;
   background-color: var(--card-bg);
-  border: 1.5px dashed var(--border-strong);
-  border-radius: var(--radius-2xl);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-xl);
   max-width: 540px;
   margin: 1.5rem auto;
   display: flex;
@@ -262,17 +257,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   border-radius: var(--radius-full);
   background-color: var(--badge-bg);
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
   margin-bottom: 1.25rem;
   border: 1px solid var(--badge-border);
 }
 
 .empty-state-title {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
@@ -305,9 +300,9 @@
   width: 100%;
   max-width: 520px;
   background-color: var(--card-bg);
-  border: 1.5px solid var(--card-border);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   animation: scaleIn var(--transition-fast);
 }
@@ -318,18 +313,18 @@
   gap: 1rem;
   padding: 1.5rem 1.75rem;
   border-bottom: 1px solid var(--border-default);
-  background-color: var(--bg-surface);
+  background-color: var(--bg-surface-elevated);
 }
 
 .modal-header-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: var(--radius-md);
   background: var(--primary-gradient);
-  color: #10172A;
+  color: #0B1020;
   flex-shrink: 0;
 }
 
@@ -378,9 +373,10 @@
 
 .modal-input-field {
   width: 100%;
-  padding: 0.75rem 1rem;
+  height: 46px;
+  padding: 0 1rem;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--input-border);
+  border: 1px solid var(--input-border);
   background-color: var(--input-bg);
   color: var(--input-text);
   font-family: var(--font-body);
@@ -392,13 +388,14 @@
 .modal-input-field:focus {
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px var(--input-focus-ring);
+  background-color: var(--input-bg);
 }
 
 .modal-textarea-field {
   width: 100%;
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
-  border: 1.5px solid var(--input-border);
+  border: 1px solid var(--input-border);
   background-color: var(--input-bg);
   color: var(--input-text);
   font-family: var(--font-body);
@@ -412,6 +409,7 @@
 .modal-textarea-field:focus {
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px var(--input-focus-ring);
+  background-color: var(--input-bg);
 }
 
 .modal-actions-row {

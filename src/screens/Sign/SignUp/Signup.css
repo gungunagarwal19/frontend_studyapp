@@ -3,18 +3,19 @@
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 120px);
-  padding: 1.5rem 1rem;
+  padding: 2rem 1rem;
 }
 
 .signup-card-container {
   width: 100%;
   max-width: 480px;
   background-color: var(--card-bg);
-  border: 1.5px solid var(--card-border);
-  border-radius: var(--radius-2xl);
-  box-shadow: var(--card-shadow);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(255, 255, 255, 0.05);
   padding: 2.5rem 2.25rem;
   animation: scaleIn var(--transition-normal);
+  position: relative;
 }
 
 .signup-card-header {
@@ -24,7 +25,7 @@
 
 .signup-title {
   font-size: 1.75rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.03em;
   margin-bottom: 0.4rem;
@@ -62,10 +63,10 @@
   height: 34px;
   border-radius: var(--radius-full);
   background-color: var(--bg-surface-subtle);
-  border: 2px solid var(--border-default);
+  border: 1.5px solid var(--border-default);
   color: var(--text-muted);
   font-family: var(--font-heading);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   transition: all var(--transition-fast);
 }
@@ -79,24 +80,24 @@
 }
 
 .stepper-item.active .stepper-bubble {
-  background: var(--primary-gradient);
-  border-color: rgba(255, 255, 255, 0.3);
-  color: #10172A;
-  box-shadow: 0 0 14px rgba(201, 154, 203, 0.5);
+  background: var(--accent-teal);
+  border-color: var(--accent-teal);
+  color: #0B1020;
+  box-shadow: 0 0 14px rgba(45, 212, 191, 0.35);
 }
 
 .stepper-item.active .stepper-label {
-  color: var(--pink-blush);
+  color: var(--accent-teal);
 }
 
 .stepper-item.completed .stepper-bubble {
-  background: var(--lavender-gradient);
-  border-color: var(--mauve-soft);
-  color: #10172A;
+  background: var(--bg-surface-elevated);
+  border-color: var(--accent-teal);
+  color: var(--accent-teal);
 }
 
 .stepper-item.completed .stepper-label {
-  color: var(--mauve-soft);
+  color: var(--text-secondary);
 }
 
 .stepper-line {
@@ -108,7 +109,7 @@
 }
 
 .stepper-line.active {
-  background: var(--primary-gradient);
+  background-color: var(--accent-teal);
 }
 
 .signup-form-body {
@@ -117,26 +118,21 @@
   gap: 1.25rem;
 }
 
-.password-requirements-box {
-  padding: 0.75rem 1rem;
-  border-radius: var(--radius-md);
-  background-color: var(--bg-surface-subtle);
-  border: 1px solid var(--border-subtle);
+.form-step-content {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 1.25rem;
+  animation: fadeIn var(--transition-fast);
 }
 
-.requirements-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .signup-card-container {
+    padding: 2rem 1.5rem;
+    border-radius: var(--radius-lg);
+  }
 
-.requirement-item {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.78rem;
-  color: var(--text-muted);
+  .signup-title {
+    font-size: 1.5rem;
+  }
 }

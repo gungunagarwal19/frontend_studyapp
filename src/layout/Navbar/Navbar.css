@@ -49,8 +49,8 @@
   height: 38px;
   border-radius: var(--radius-md);
   background: var(--primary-gradient);
-  color: #10172A;
-  box-shadow: 0 4px 14px rgba(201, 154, 203, 0.4);
+  color: #0B1020;
+  box-shadow: 0 4px 14px rgba(45, 212, 191, 0.3);
 }
 
 .brand-icon {
@@ -60,12 +60,15 @@
 
 .brand-name {
   color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  transition: color var(--transition-fast);
 }
 
-.brand-accent {
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.navbar-brand:hover .brand-name {
+  color: var(--accent-teal);
 }
 
 /* Desktop Navigation */
@@ -103,7 +106,7 @@
 }
 
 .nav-link.active {
-  color: var(--pink-blush);
+  color: var(--accent-teal);
   background-color: var(--badge-bg);
   border: 1px solid var(--badge-border);
   font-weight: 600;
@@ -149,7 +152,7 @@
 }
 
 .moon-icon {
-  color: var(--lavender-soft);
+  color: var(--accent-teal);
 }
 
 /* User Profile Controls */
@@ -178,7 +181,7 @@
 .profile-chip.active {
   background-color: var(--badge-bg);
   border-color: var(--border-strong);
-  color: var(--pink-blush);
+  color: var(--accent-teal);
 }
 
 .avatar-initial {
@@ -189,7 +192,7 @@
   height: 28px;
   border-radius: var(--radius-full);
   background: var(--primary-gradient);
-  color: #10172A;
+  color: #0B1020;
   font-size: 0.85rem;
   font-weight: 800;
 }
@@ -247,19 +250,20 @@
 
 .btn-ghost-link:hover {
   background-color: var(--bg-surface-subtle);
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
 }
 
 .btn-primary-link {
-  background: var(--primary-gradient);
-  color: #10172A;
+  background: var(--accent-teal);
+  background-image: var(--primary-gradient);
+  color: #0B1020;
   font-weight: 700;
-  box-shadow: 0 2px 10px rgba(201, 154, 203, 0.35);
+  box-shadow: 0 2px 10px rgba(45, 212, 191, 0.25);
 }
 
 .btn-primary-link:hover {
-  background: var(--primary-gradient-hover);
-  box-shadow: 0 4px 16px rgba(201, 154, 203, 0.5);
+  background-image: var(--primary-gradient-hover);
+  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.4);
   transform: translateY(-1px);
 }
 
@@ -336,7 +340,7 @@
 .mobile-nav-link:hover,
 .mobile-nav-link.active {
   background-color: var(--badge-bg);
-  color: var(--pink-blush);
+  color: var(--accent-teal);
   border: 1px solid var(--badge-border);
   font-weight: 600;
 }

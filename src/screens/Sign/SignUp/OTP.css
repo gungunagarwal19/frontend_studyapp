@@ -11,10 +11,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.3rem 0.75rem;
+  padding: 0.35rem 0.85rem;
   border-radius: var(--radius-full);
   background-color: var(--badge-bg);
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
   border: 1px solid var(--badge-border);
   font-size: 0.85rem;
   font-weight: 600;
@@ -33,15 +33,15 @@
 }
 
 .otp-digit-box {
-  width: 52px;
-  height: 58px;
+  width: 50px;
+  height: 54px;
   text-align: center;
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: var(--input-text);
   background-color: var(--input-bg);
-  border: 2px solid var(--input-border);
+  border: 1.5px solid var(--input-border);
   border-radius: var(--radius-md);
   outline: none;
   transition: all var(--transition-fast);
@@ -49,13 +49,13 @@
 
 .otp-digit-box:focus {
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 4px var(--input-focus-ring);
+  box-shadow: 0 0 0 3px var(--input-focus-ring);
   transform: translateY(-2px);
 }
 
 .otp-digit-box.has-digit {
-  border-color: var(--mauve-soft);
-  background-color: var(--badge-bg);
+  border-color: var(--accent-teal);
+  background-color: rgba(45, 212, 191, 0.05);
 }
 
 .otp-timer-row {
@@ -68,14 +68,14 @@
 }
 
 .timer-countdown {
-  color: var(--pink-blush);
+  color: var(--accent-teal);
   font-weight: 700;
 }
 
 .resend-link-btn {
   background: transparent;
   border: none;
-  color: var(--mauve-soft);
+  color: var(--accent-teal);
   font-family: var(--font-heading);
   font-size: 0.88rem;
   font-weight: 600;
@@ -109,9 +109,25 @@
   width: 100%;
   padding: 0.75rem;
   font-size: 0.92rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
 .btn-ghost-back:hover {
   background-color: var(--bg-surface-subtle);
   color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+@media (max-width: 420px) {
+  .otp-boxes-wrapper {
+    gap: 0.4rem;
+  }
+
+  .otp-digit-box {
+    width: 42px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
 }

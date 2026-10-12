@@ -63,7 +63,7 @@ const ForgotPassword = ({ onBackToLogin }) => {
             <div className="auth-card-container">
                 <div className="auth-card-header">
                     <div className="auth-logo-badge">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                             <rect width="20" height="16" x="2" y="4" rx="2"/>
                             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                         </svg>
@@ -87,18 +87,7 @@ const ForgotPassword = ({ onBackToLogin }) => {
                     )}
 
                     {message && (
-                        <div className="alert-success-box" style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '0.6rem',
-                            padding: '0.85rem 1rem',
-                            borderRadius: 'var(--radius-md)',
-                            backgroundColor: 'var(--accent-emerald-light)',
-                            border: '1px solid rgba(16, 185, 129, 0.3)',
-                            color: 'var(--accent-emerald)',
-                            fontSize: '0.88rem',
-                            fontWeight: 500
-                        }}>
+                        <div className="alert-success-box">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                 <polyline points="20 6 9 17 4 12"/>
                             </svg>

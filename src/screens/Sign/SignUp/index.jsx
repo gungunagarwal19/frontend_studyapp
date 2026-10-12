@@ -13,6 +13,7 @@ import {
   clearSaveUserSuccess,
 } from '../../../../store/User/UserReducer';
 import { CheckIcon } from '../../../components/Icons';
+import '../Login/Login.css';
 import './Signup.css';
 import './OTP.css';
 

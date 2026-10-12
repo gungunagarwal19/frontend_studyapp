@@ -68,9 +68,7 @@ const Navbar = () => {
               <path d="M6 14h6" />
             </svg>
           </div>
-          <span className="brand-name">
-            Learn<span className="brand-accent">mate</span>
-          </span>
+          <span className="brand-name">Learnmate</span>
         </Link>
 
         {/* Desktop Navigation Links */}
