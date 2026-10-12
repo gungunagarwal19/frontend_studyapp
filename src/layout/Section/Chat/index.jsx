@@ -2,25 +2,28 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Chat } from "../../../../store/Chat/ChatAction";
 import { addMessage, clearMessages } from "../../../../store/Chat/ChatReducer";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { getSections } from "../../../../store/Section/SectionAction";
 import {
   LightbulbIcon,
   ListChecksIcon,
   HelpCircleIcon,
   MessageSquareIcon,
+  RotateCcwIcon,
+  CheckIcon,
 } from "../../../components/Icons";
-import './Chat.css';
+import MarkdownRenderer from "./MarkdownRenderer";
+import "./Chat.css";
 
 const ChatComponent = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { chatMessages, loading, error, message } = useSelector(state => state.chat);
     const sections = useSelector(state => state.section.sections);
     const inputRef = useRef(null);
     const chatEndRef = useRef(null);
     const { sectionId } = useParams();
     const [input, setInput] = useState("");
+    const [copiedIndex, setCopiedIndex] = useState(null);
 
     useEffect(() => {
         if (!sections || sections.length === 0) {
@@ -45,7 +48,7 @@ const ChatComponent = () => {
     }, [sectionId, dispatch]);
 
     const section = sections && sections.find(s => (s._id || s.id) === sectionId);
-    const sectionTitle = section ? section.title : 'Study Section';
+    const sectionTitle = section ? section.title : "Study Section";
 
     const handleSend = (e) => {
         e.preventDefault();
@@ -59,6 +62,21 @@ const ChatComponent = () => {
     const handlePromptClick = (sampleQuery) => {
         dispatch(addMessage({ type: "user", text: sampleQuery }));
         dispatch(Chat({ question: sampleQuery, sectionId }));
+    };
+
+    const handleCopyResponse = async (text, idx) => {
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopiedIndex(idx);
+            setTimeout(() => setCopiedIndex(null), 2000);
+        } catch (err) {
+            console.error("Failed to copy response:", err);
+        }
+    };
+
+    const handleRegenerate = (questionText) => {
+        if (!questionText || loading) return;
+        dispatch(Chat({ question: questionText, sectionId }));
     };
 
     return (
@@ -138,22 +156,78 @@ const ChatComponent = () => {
                         </div>
                     )}
 
-                    {chatMessages.map((msg, idx) => (
-                        <div
-                            key={idx}
-                            className={`chat-message-row ${msg.type === "user" ? "row-user" : "row-bot"}`}
-                        >
-                            {msg.type !== "user" && (
-                                <div className="message-avatar bot-avatar">
-                                    <MessageSquareIcon size={16} />
-                                </div>
-                            )}
+                    {chatMessages.map((msg, idx) => {
+                        const isUser = msg.type === "user";
 
-                            <div className={`chat-bubble ${msg.type === "user" ? "user-bubble" : "bot-bubble"}`}>
-                                <div className="bubble-text">{msg.text}</div>
+                        // Find the corresponding user question for this bot response
+                        let userPromptForThis = null;
+                        if (!isUser) {
+                            for (let i = idx - 1; i >= 0; i--) {
+                                if (chatMessages[i].type === "user") {
+                                    userPromptForThis = chatMessages[i].text;
+                                    break;
+                                }
+                            }
+                        }
+
+                        return (
+                            <div
+                                key={idx}
+                                className={`chat-message-row ${isUser ? "row-user" : "row-bot"}`}
+                            >
+                                {!isUser && (
+                                    <div className="message-avatar bot-avatar">
+                                        <MessageSquareIcon size={16} />
+                                    </div>
+                                )}
+
+                                <div className={`chat-bubble ${isUser ? "user-bubble" : "bot-bubble"}`}>
+                                    {isUser ? (
+                                        <div className="bubble-text">{msg.text}</div>
+                                    ) : (
+                                        <>
+                                            <MarkdownRenderer content={msg.text} />
+                                            <div className="bot-message-actions">
+                                                <button
+                                                    type="button"
+                                                    className="msg-action-btn"
+                                                    onClick={() => handleCopyResponse(msg.text, idx)}
+                                                    title="Copy response"
+                                                >
+                                                    {copiedIndex === idx ? (
+                                                        <>
+                                                            <CheckIcon size={13} />
+                                                            <span className="action-text-active">Copied!</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                                            </svg>
+                                                            <span>Copy</span>
+                                                        </>
+                                                    )}
+                                                </button>
+                                                {userPromptForThis && (
+                                                    <button
+                                                        type="button"
+                                                        className="msg-action-btn"
+                                                        onClick={() => handleRegenerate(userPromptForThis)}
+                                                        disabled={loading}
+                                                        title="Regenerate response"
+                                                    >
+                                                        <RotateCcwIcon size={13} />
+                                                        <span>Regenerate</span>
+                                                    </button>
+                                                )}
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
 
                     {/* Loading Indicator */}
                     {loading && (
@@ -165,6 +239,7 @@ const ChatComponent = () => {
                                 <span className="typing-dot"></span>
                                 <span className="typing-dot"></span>
                                 <span className="typing-dot"></span>
+                                <span className="loading-label">Generating answer...</span>
                             </div>
                         </div>
                     )}
