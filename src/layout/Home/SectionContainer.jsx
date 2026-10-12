@@ -4,6 +4,7 @@ import { addSection, getSections, deleteSection } from '../../../store/Section/S
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Section from '../../components/Section';
+import { CheckIcon } from '../../components/Icons';
 import './SectionContainer.css';
 import { toast } from 'react-toastify';
 
@@ -98,13 +99,13 @@ const SectionContainer = () => {
                     <span className="hero-badge-dot"></span>
                     <span>Smart Study Workspace</span>
                 </div>
-                
+
                 <h1 className="hero-title">
-                    {isAuthenticated && user?.name 
-                        ? `Welcome back, ${user.name.split(' ')[0]} 👋` 
+                    {isAuthenticated && user?.name
+                        ? `Welcome back, ${user.name.split(' ')[0]}`
                         : "Empower Your Learning"}
                 </h1>
-                
+
                 <p className="hero-description">
                     Organize your course materials, review interactive 3D flashcards, and get instant explanations with AI.
                 </p>
@@ -113,8 +114,8 @@ const SectionContainer = () => {
                 <div className="dashboard-toolbar">
                     <div className="search-bar-wrapper">
                         <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="11" cy="11" r="8"/>
-                            <path d="m21 21-4.3-4.3"/>
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.3-4.3" />
                         </svg>
                         <input
                             type="text"
@@ -125,7 +126,7 @@ const SectionContainer = () => {
                             aria-label="Search sections"
                         />
                         {searchQuery && (
-                            <button 
+                            <button
                                 className="clear-search-btn"
                                 onClick={() => setSearchQuery('')}
                                 aria-label="Clear search query"
@@ -137,32 +138,32 @@ const SectionContainer = () => {
 
                     <div className="toolbar-actions-group">
                         {/* Filter Dropdown */}
-                        <div 
-                            className="filter-dropdown-trigger" 
-                            onClick={handleShowSections} 
+                        <div
+                            className="filter-dropdown-trigger"
+                            onClick={handleShowSections}
                             tabIndex={0}
                             role="button"
                             aria-haspopup="listbox"
                             aria-expanded={isDropdownOpen}
                         >
                             <svg className="filter-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                             </svg>
                             <span className="filter-selected-label">{selectedSection}</span>
                             <svg className={`filter-arrow ${isDropdownOpen ? 'open' : ''}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="m6 9 6 6 6-6"/>
+                                <path d="m6 9 6 6 6-6" />
                             </svg>
 
                             {isDropdownOpen && (
                                 <div className="dropdown-menu-list" role="listbox">
-                                    <div 
+                                    <div
                                         className={`dropdown-menu-item ${selectedSection === 'All Sections' ? 'active' : ''}`}
                                         onClick={() => handleSelectSection('All Sections')}
                                         role="option"
                                         aria-selected={selectedSection === 'All Sections'}
                                     >
                                         <span>All Sections</span>
-                                        {selectedSection === 'All Sections' && <span className="checkmark">✓</span>}
+                                        {selectedSection === 'All Sections' && <CheckIcon size={14} className="checkmark" />}
                                     </div>
                                     {sections && sections.map(section => (
                                         <div
@@ -173,7 +174,7 @@ const SectionContainer = () => {
                                             aria-selected={selectedSection === section.title}
                                         >
                                             <span>{section.title}</span>
-                                            {selectedSection === section.title && <span className="checkmark">✓</span>}
+                                            {selectedSection === section.title && <CheckIcon size={14} className="checkmark" />}
                                         </div>
                                     ))}
                                 </div>
@@ -186,8 +187,8 @@ const SectionContainer = () => {
                             onClick={handleAddCard}
                         >
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                <path d="M5 12h14"/>
-                                <path d="M12 5v14"/>
+                                <path d="M5 12h14" />
+                                <path d="M12 5v14" />
                             </svg>
                             <span>New Section</span>
                         </button>
@@ -202,17 +203,17 @@ const SectionContainer = () => {
                 <div className="empty-sections-state">
                     <div className="empty-state-icon">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
-                            <path d="M9 10h6"/>
-                            <path d="M9 14h4"/>
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+                            <path d="M9 10h6" />
+                            <path d="M9 14h4" />
                         </svg>
                     </div>
                     <h3 className="empty-state-title">
                         {searchQuery ? "No matching sections found" : "No study sections yet"}
                     </h3>
                     <p className="empty-state-desc">
-                        {searchQuery 
-                            ? "Try checking your spelling or clearing the search filter." 
+                        {searchQuery
+                            ? "Try checking your spelling or clearing the search filter."
                             : "Create your first study section to upload documents, review flashcards, and chat with AI."}
                     </p>
                     {searchQuery ? (
@@ -248,8 +249,8 @@ const SectionContainer = () => {
                         <div className="modal-header">
                             <div className="modal-header-icon">
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M12 5v14"/>
-                                    <path d="M5 12h14"/>
+                                    <path d="M12 5v14" />
+                                    <path d="M5 12h14" />
                                 </svg>
                             </div>
                             <div>
@@ -292,15 +293,15 @@ const SectionContainer = () => {
                             </div>
 
                             <div className="modal-actions-row">
-                                <button 
-                                    type="button" 
-                                    className="btn btn-secondary" 
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
                                     onClick={handleCancel}
                                 >
                                     Cancel
                                 </button>
-                                <button 
-                                    type="submit" 
+                                <button
+                                    type="submit"
                                     className="btn btn-primary"
                                     disabled={loading || !newCardTitle.trim()}
                                 >

@@ -12,6 +12,7 @@ import {
   clearSaveUserError,
   clearSaveUserSuccess,
 } from '../../../../store/User/UserReducer';
+import { CheckIcon } from '../../../components/Icons';
 import './Signup.css';
 import './OTP.css';
 
@@ -265,12 +266,12 @@ const SignUp = () => {
           {/* Stepper Indicator */}
           <div className="stepper-indicator-wrapper">
             <div className={`stepper-item ${currentStep >= 1 ? 'active' : ''} ${currentStep > 1 ? 'completed' : ''}`}>
-              <div className="stepper-bubble">{currentStep > 1 ? '✓' : '1'}</div>
+              <div className="stepper-bubble">{currentStep > 1 ? <CheckIcon size={14} /> : '1'}</div>
               <span className="stepper-label">Details</span>
             </div>
             <div className={`stepper-line ${currentStep >= 2 ? 'active' : ''}`}></div>
             <div className={`stepper-item ${currentStep >= 2 ? 'active' : ''} ${currentStep > 2 ? 'completed' : ''}`}>
-              <div className="stepper-bubble">{currentStep > 2 ? '✓' : '2'}</div>
+              <div className="stepper-bubble">{currentStep > 2 ? <CheckIcon size={14} /> : '2'}</div>
               <span className="stepper-label">Verify</span>
             </div>
             <div className={`stepper-line ${currentStep >= 3 ? 'active' : ''}`}></div>

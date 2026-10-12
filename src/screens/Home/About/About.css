@@ -10,7 +10,7 @@
   width: 100%;
   max-width: 680px;
   background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
+  border: 1.5px solid var(--card-border);
   border-radius: var(--radius-2xl);
   box-shadow: var(--card-shadow);
   padding: 2.5rem;
@@ -38,7 +38,7 @@
   inset: -4px;
   border-radius: var(--radius-full);
   background: var(--primary-gradient);
-  opacity: 0.5;
+  opacity: 0.45;
   filter: blur(10px);
   z-index: 1;
 }
@@ -53,11 +53,11 @@
   height: 76px;
   border-radius: var(--radius-full);
   background: var(--primary-gradient);
-  color: #ffffff;
+  color: #10172A;
   font-family: var(--font-heading);
   font-size: 2rem;
   font-weight: 800;
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+  box-shadow: 0 6px 20px rgba(201, 154, 203, 0.4);
 }
 
 .about-name {
@@ -89,11 +89,8 @@
   padding: 0.25rem 0.75rem;
   border-radius: var(--radius-full);
   background-color: var(--badge-bg);
-  color: var(--primary-600);
-}
-
-[data-theme='dark'] .about-pill {
-  color: var(--primary-400);
+  color: var(--mauve-soft);
+  border: 1px solid var(--badge-border);
 }
 
 /* Bio */
@@ -139,7 +136,7 @@
 
 .about-link-card:hover {
   transform: translateY(-2px);
-  border-color: var(--primary-400);
+  border-color: var(--mauve-soft);
   background-color: var(--bg-surface-hover);
   box-shadow: var(--shadow-sm);
 }
@@ -155,18 +152,18 @@
 }
 
 .email-icon {
-  background-color: rgba(244, 63, 94, 0.12);
-  color: #f43f5e;
+  background-color: rgba(232, 167, 184, 0.15);
+  color: var(--pink-blush);
 }
 
 .linkedin-icon {
-  background-color: rgba(14, 118, 168, 0.12);
-  color: #0e76a8;
+  background-color: rgba(155, 127, 211, 0.15);
+  color: var(--lavender-soft);
 }
 
 .github-icon {
-  background-color: rgba(100, 116, 139, 0.15);
-  color: var(--text-primary);
+  background-color: rgba(201, 154, 203, 0.15);
+  color: var(--mauve-soft);
 }
 
 .leetcode-icon {
@@ -214,9 +211,9 @@
   height: 46px;
   border-radius: var(--radius-md);
   background: var(--primary-gradient);
-  color: #ffffff;
+  color: #10172A;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  box-shadow: 0 4px 12px rgba(201, 154, 203, 0.35);
 }
 
 .edu-info {
@@ -244,12 +241,9 @@
   padding: 0.2rem 0.6rem;
   border-radius: var(--radius-full);
   background-color: var(--badge-bg);
-  color: var(--primary-600);
+  color: var(--mauve-soft);
+  border: 1px solid var(--badge-border);
   margin-top: 0.25rem;
-}
-
-[data-theme='dark'] .edu-year-badge {
-  color: var(--primary-400);
 }
 
 @media (max-width: 600px) {

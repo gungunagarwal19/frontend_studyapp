@@ -5,6 +5,17 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { fetchReviewCards, swipeFlashCard } from '../../../../store/FlashCard/FlashCardAction';
 import { getSections } from '../../../../store/Section/SectionAction';
 import Loading from '../../../components/Loading';
+import {
+  RotateCcwIcon,
+  AlertCircleIcon,
+  ThumbsUpIcon,
+  SparklesIcon,
+  HelpCircleIcon,
+  CheckCircle2Icon,
+  RefreshCwIcon,
+  AwardIcon,
+  LayersIcon,
+} from '../../../components/Icons';
 
 const FlashCard = () => {
     const dispatch = useDispatch();
@@ -99,13 +110,15 @@ const FlashCard = () => {
         </div>
 
         <div className="flashcard-hero-header">
-          <div className="workspace-badge" style={{ backgroundColor: 'rgba(99, 102, 241, 0.12)', color: '#6366f1' }}>
-            <span className="badge-dot" style={{ backgroundColor: '#6366f1', boxShadow: '0 0 8px #6366f1' }}></span>
+          <div className="flashcard-meta-badge">
+            <LayersIcon size={14} />
             <span>Spaced Repetition</span>
           </div>
-          <h1 className="flashcard-page-title">Interactive Flashcards</h1>
+          <h1 className="flashcard-page-title">
+            Interactive <span className="title-gradient-accent">Flashcards</span>
+          </h1>
           <p className="flashcard-page-desc">
-            Flip cards to review concepts and rate your recall using keyboard shortcuts.
+            Test your knowledge through active recall and spaced repetition.
           </p>
         </div>
 
@@ -122,14 +135,11 @@ const FlashCard = () => {
           {!loading && !currentCard ? (
             <div className="flashcard-complete-card">
               <div className="complete-icon-bubble">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                  <polyline points="22 4 12 14.01 9 11.01"/>
-                </svg>
+                <AwardIcon size={36} />
               </div>
-              <h2 className="complete-title">Session Complete! 🎉</h2>
+              <h2 className="complete-title">Session Complete</h2>
               <p className="complete-desc">
-                Great job! You have reviewed all available flashcards in this study section.
+                You have reviewed all available cards for this study section. New reviews will be scheduled automatically.
               </p>
               <button
                 className="btn btn-primary"
@@ -140,89 +150,117 @@ const FlashCard = () => {
             </div>
           ) : !loading && currentCard && (
             <div className="flashcard-interactive-wrapper">
-              {/* 3D Flip Card */}
-              <div 
-                className={`modern-flashcard ${slideDirection} ${isFlipped ? 'flipped' : ''}`}
-                onClick={() => setIsFlipped(!isFlipped)}
-                role="button"
-                tabIndex={0}
-                aria-label="Flashcard. Click or press space to flip."
-              >
-                {/* Front Side (Question) */}
-                <div className="flashcard-face flashcard-front">
-                  <div className="face-tag-row">
-                    <span className="face-pill face-pill-question">QUESTION</span>
-                    <span className="face-flip-hint">Click or press SPACE to flip ⟳</span>
-                  </div>
-                  <div className="face-text-content">
-                    <p>{currentCard?.question}</p>
-                  </div>
-                </div>
+              {/* Physical Stacked Cards Container */}
+              <div className="flashcard-stack-deck">
+                {/* Visual Stack Layers (Bottom Deck Cards) */}
+                <div className="card-stack-layer stack-layer-2" aria-hidden="true"></div>
+                <div className="card-stack-layer stack-layer-1" aria-hidden="true"></div>
 
-                {/* Back Side (Answer) */}
-                <div className="flashcard-face flashcard-back">
-                  <div className="face-tag-row">
-                    <span className="face-pill face-pill-answer">ANSWER</span>
-                    <span className="face-flip-hint">Click or press SPACE to flip ⟳</span>
+                {/* Main Interactive 3D Card */}
+                <div 
+                  className={`modern-flashcard ${slideDirection} ${isFlipped ? 'flipped' : ''}`}
+                  onClick={() => setIsFlipped(!isFlipped)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Flashcard. Click or press space to flip."
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') setIsFlipped(!isFlipped);
+                  }}
+                >
+                  {/* Front Side (Question) */}
+                  <div className="flashcard-face flashcard-front">
+                    <div className="face-tag-row">
+                      <div className="face-ui-badge badge-question">
+                        <HelpCircleIcon size={14} />
+                        <span>QUESTION</span>
+                      </div>
+                      <div className="face-flip-control">
+                        <RefreshCwIcon size={13} />
+                        <span>Click to flip</span>
+                      </div>
+                    </div>
+                    <div className="face-text-content">
+                      <p>{currentCard?.question}</p>
+                    </div>
+                    <div className="card-bottom-bar">
+                      <span className="card-side-indicator">Front</span>
+                    </div>
                   </div>
-                  <div className="face-text-content">
-                    <p>{currentCard?.answer}</p>
+
+                  {/* Back Side (Answer) */}
+                  <div className="flashcard-face flashcard-back">
+                    <div className="face-tag-row">
+                      <div className="face-ui-badge badge-answer">
+                        <CheckCircle2Icon size={14} />
+                        <span>ANSWER</span>
+                      </div>
+                      <div className="face-flip-control">
+                        <RefreshCwIcon size={13} />
+                        <span>Click to flip</span>
+                      </div>
+                    </div>
+                    <div className="face-text-content">
+                      <p>{currentCard?.answer}</p>
+                    </div>
+                    <div className="card-bottom-bar">
+                      <span className="card-side-indicator">Back</span>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* On-screen quick rating buttons */}
-              <div className="card-rating-actions">
+              {/* Product-Designed Recall Controls */}
+              <div className="card-rating-actions" role="group" aria-label="Recall rating actions">
                 <button 
                   type="button" 
-                  className="rating-action-btn btn-forgot"
+                  className="rating-action-btn btn-recall-forgot"
                   onClick={() => changeCard('exit-right', 'right')}
-                  title="Press Right Arrow"
+                  aria-label="Didn't Remember (Right arrow)"
                 >
-                  <span className="key-kbd">→</span>
-                  <span>Didn’t Remember</span>
+                  <RotateCcwIcon size={16} />
+                  <span className="rating-btn-text">Didn't Remember</span>
                 </button>
 
                 <button 
                   type="button" 
-                  className="rating-action-btn btn-hard"
+                  className="rating-action-btn btn-recall-hard"
                   onClick={() => changeCard('exit-left', 'left')}
-                  title="Press Left Arrow"
+                  aria-label="Difficult (Left arrow)"
                 >
-                  <span className="key-kbd">←</span>
-                  <span>Difficult</span>
+                  <AlertCircleIcon size={16} />
+                  <span className="rating-btn-text">Difficult</span>
                 </button>
 
                 <button 
                   type="button" 
-                  className="rating-action-btn btn-good"
+                  className="rating-action-btn btn-recall-good"
                   onClick={() => changeCard('exit-up', 'up')}
-                  title="Press Up Arrow"
+                  aria-label="Almost Got It (Up arrow)"
                 >
-                  <span className="key-kbd">↑</span>
-                  <span>Almost Got It</span>
+                  <ThumbsUpIcon size={16} />
+                  <span className="rating-btn-text">Almost Got It</span>
                 </button>
 
                 <button 
                   type="button" 
-                  className="rating-action-btn btn-perfect"
+                  className="rating-action-btn btn-recall-perfect"
                   onClick={() => changeCard('exit-down', 'down')}
-                  title="Press Down Arrow"
+                  aria-label="Perfect Recall (Down arrow)"
                 >
-                  <span className="key-kbd">↓</span>
-                  <span>Perfect Recall</span>
+                  <SparklesIcon size={16} />
+                  <span className="rating-btn-text">Perfect Recall</span>
                 </button>
               </div>
 
-              {/* Keyboard Instructions Bar */}
+              {/* Keyboard Shortcuts Bar */}
               <div className="keyboard-instructions-legend">
-                <span className="legend-title">Keyboard Shortcuts:</span>
+                <span className="legend-title">Shortcuts:</span>
                 <div className="legend-keys-list">
-                  <span className="legend-item"><kbd className="key-badge">SPACE</kbd> Flip card</span>
-                  <span className="legend-item"><kbd className="key-badge">→</kbd> Didn’t remember</span>
-                  <span className="legend-item"><kbd className="key-badge">←</kbd> Difficult</span>
-                  <span className="legend-item"><kbd className="key-badge">↑</kbd> Almost</span>
-                  <span className="legend-item"><kbd className="key-badge">↓</kbd> Perfect</span>
+                  <span className="legend-item"><kbd className="keycap">SPACE</kbd> Flip card</span>
+                  <span className="legend-item"><kbd className="keycap">→</kbd> Didn't remember</span>
+                  <span className="legend-item"><kbd className="keycap">←</kbd> Difficult</span>
+                  <span className="legend-item"><kbd className="keycap">↑</kbd> Almost</span>
+                  <span className="legend-item"><kbd className="keycap">↓</kbd> Perfect</span>
                 </div>
               </div>
             </div>

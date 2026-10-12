@@ -22,34 +22,34 @@
 
 .study-section-card:focus-visible {
   box-shadow: 0 0 0 3px var(--input-focus-ring);
-  border-color: var(--primary-500);
+  border-color: var(--mauve-soft);
 }
 
 /* Card Top Accent */
 .card-top-accent {
-  height: 5px;
+  height: 4px;
   width: 100%;
   background: var(--primary-gradient);
 }
 
 .study-section-card.accent-blue .card-top-accent {
-  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  background: linear-gradient(90deg, #E8A7B8, #C99ACB);
 }
 
 .study-section-card.accent-indigo .card-top-accent {
-  background: linear-gradient(90deg, #6366f1, #818cf8);
+  background: linear-gradient(90deg, #C99ACB, #9B7FD3);
 }
 
 .study-section-card.accent-purple .card-top-accent {
-  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+  background: linear-gradient(90deg, #9B7FD3, #B8A5E3);
 }
 
 .study-section-card.accent-emerald .card-top-accent {
-  background: linear-gradient(90deg, #10b981, #34d399);
+  background: linear-gradient(90deg, #F5C6D2, #C99ACB);
 }
 
 .study-section-card.accent-amber .card-top-accent {
-  background: linear-gradient(90deg, #f59e0b, #fbbf24);
+  background: linear-gradient(90deg, #E8A7B8, #9B7FD3);
 }
 
 .card-inner {
@@ -74,11 +74,8 @@
   height: 38px;
   border-radius: var(--radius-md);
   background-color: var(--badge-bg);
-  color: var(--primary-600);
-}
-
-[data-theme='dark'] .card-icon-badge {
-  color: var(--primary-400);
+  color: var(--mauve-soft);
+  border: 1px solid var(--badge-border);
 }
 
 .card-main-content {
@@ -110,7 +107,7 @@
   justify-content: space-between;
   padding-top: 0.85rem;
   border-top: 1px solid var(--border-subtle);
-  color: var(--primary-500);
+  color: var(--mauve-soft);
   font-family: var(--font-heading);
   font-size: 0.88rem;
   font-weight: 600;
@@ -123,6 +120,10 @@
 
 .study-section-card:hover .arrow-icon {
   transform: translateX(4px);
+}
+
+.study-section-card:hover .card-footer-action {
+  color: var(--pink-blush);
 }
 
 /* 3-dots Menu */

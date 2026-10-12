@@ -24,7 +24,7 @@
 
 .workspace-back-btn:hover {
   background-color: var(--bg-surface-subtle);
-  color: var(--primary-500);
+  color: var(--pink-blush);
 }
 
 .workspace-hero {
@@ -38,7 +38,8 @@
   padding: 0.35rem 0.85rem;
   border-radius: var(--radius-full);
   background-color: var(--badge-bg);
-  color: var(--badge-text);
+  color: var(--mauve-soft);
+  border: 1px solid var(--badge-border);
   font-family: var(--font-heading);
   font-size: 0.82rem;
   font-weight: 700;
@@ -50,8 +51,8 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: var(--primary-500);
-  box-shadow: 0 0 8px var(--primary-500);
+  background-color: var(--pink-blush);
+  box-shadow: 0 0 8px var(--pink-blush);
 }
 
 .workspace-title {
@@ -95,11 +96,12 @@
 .workspace-feature-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--card-shadow-hover);
+  border-color: var(--border-strong);
 }
 
 .workspace-feature-card:focus-visible {
   box-shadow: 0 0 0 3px var(--input-focus-ring);
-  border-color: var(--primary-500);
+  border-color: var(--mauve-soft);
 }
 
 .feature-card-badge {
@@ -117,67 +119,43 @@
   transform: scale(1.08);
 }
 
-/* 1. Flashcards Styles */
+/* 1. Flashcards Feature */
 .feature-flashcards .feature-card-badge {
-  background: linear-gradient(135deg, #6366f1, #818cf8);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
-}
-
-.feature-flashcards:hover {
-  border-color: rgba(99, 102, 241, 0.5);
+  background: linear-gradient(135deg, #E8A7B8, #C99ACB);
+  color: #10172A;
+  box-shadow: 0 4px 14px rgba(232, 167, 184, 0.35);
 }
 
 .pill-indigo {
-  background-color: rgba(99, 102, 241, 0.1);
-  color: #6366f1;
+  background-color: rgba(232, 167, 184, 0.12);
+  color: var(--pink-blush);
+  border: 1px solid rgba(232, 167, 184, 0.25);
 }
 
-[data-theme='dark'] .pill-indigo {
-  background-color: rgba(99, 102, 241, 0.2);
-  color: #a5b4fc;
-}
-
-/* 2. Chat Styles */
+/* 2. Chat Feature */
 .feature-chat .feature-card-badge {
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
-}
-
-.feature-chat:hover {
-  border-color: rgba(139, 92, 246, 0.5);
+  background: linear-gradient(135deg, #C99ACB, #9B7FD3);
+  color: #10172A;
+  box-shadow: 0 4px 14px rgba(201, 154, 203, 0.35);
 }
 
 .pill-purple {
-  background-color: rgba(139, 92, 246, 0.1);
-  color: #8b5cf6;
+  background-color: rgba(201, 154, 203, 0.12);
+  color: var(--mauve-soft);
+  border: 1px solid rgba(201, 154, 203, 0.25);
 }
 
-[data-theme='dark'] .pill-purple {
-  background-color: rgba(139, 92, 246, 0.2);
-  color: #c4b5fd;
-}
-
-/* 3. Upload Styles */
+/* 3. Upload Feature */
 .feature-upload .feature-card-badge {
-  background: linear-gradient(135deg, #10b981, #34d399);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
-}
-
-.feature-upload:hover {
-  border-color: rgba(16, 185, 129, 0.5);
+  background: linear-gradient(135deg, #9B7FD3, #B8A5E3);
+  color: #10172A;
+  box-shadow: 0 4px 14px rgba(155, 127, 211, 0.35);
 }
 
 .pill-emerald {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: #059669;
-}
-
-[data-theme='dark'] .pill-emerald {
-  background-color: rgba(16, 185, 129, 0.2);
-  color: #6ee7b7;
+  background-color: rgba(155, 127, 211, 0.12);
+  color: var(--lavender-soft);
+  border: 1px solid rgba(155, 127, 211, 0.25);
 }
 
 .feature-pill {
@@ -198,10 +176,10 @@
 }
 
 .feature-desc {
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.6;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
   flex-grow: 1;
 }
 
@@ -212,8 +190,12 @@
   font-family: var(--font-heading);
   font-size: 0.92rem;
   font-weight: 600;
-  color: var(--primary-500);
-  margin-top: auto;
+  color: var(--mauve-soft);
+  transition: color var(--transition-fast);
+}
+
+.workspace-feature-card:hover .feature-action-link {
+  color: var(--pink-blush);
 }
 
 .feature-action-link svg {
@@ -224,7 +206,6 @@
   transform: translateX(4px);
 }
 
-/* Responsive Media Queries */
 @media (max-width: 960px) {
   .workspace-cards-grid {
     grid-template-columns: 1fr;

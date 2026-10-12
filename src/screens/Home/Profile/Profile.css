@@ -10,7 +10,7 @@
   width: 100%;
   max-width: 500px;
   background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
+  border: 1.5px solid var(--card-border);
   border-radius: var(--radius-2xl);
   box-shadow: var(--card-shadow);
   overflow: hidden;
@@ -34,11 +34,11 @@
   height: 64px;
   border-radius: var(--radius-full);
   background: var(--primary-gradient);
-  color: #ffffff;
+  color: #10172A;
   font-family: var(--font-heading);
   font-size: 1.75rem;
   font-weight: 800;
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+  box-shadow: 0 4px 16px rgba(201, 154, 203, 0.4);
   flex-shrink: 0;
 }
 
@@ -63,11 +63,8 @@
   padding: 0.2rem 0.65rem;
   border-radius: var(--radius-full);
   background-color: var(--badge-bg);
-  color: var(--primary-600);
-}
-
-[data-theme='dark'] .profile-status-badge {
-  color: var(--primary-400);
+  color: var(--mauve-soft);
+  border: 1px solid var(--badge-border);
 }
 
 .profile-details-section {

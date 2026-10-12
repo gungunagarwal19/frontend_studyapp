@@ -45,17 +45,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: var(--radius-md);
   background: var(--primary-gradient);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+  color: #10172A;
+  box-shadow: 0 4px 14px rgba(201, 154, 203, 0.4);
 }
 
 .brand-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
 }
 
 .brand-name {
@@ -103,8 +103,9 @@
 }
 
 .nav-link.active {
-  color: var(--primary-500);
+  color: var(--pink-blush);
   background-color: var(--badge-bg);
+  border: 1px solid var(--badge-border);
   font-weight: 600;
 }
 
@@ -138,8 +139,8 @@
 }
 
 .theme-icon {
-  width: 20px;
-  height: 20px;
+  width: 19px;
+  height: 19px;
   transition: transform var(--transition-normal);
 }
 
@@ -148,7 +149,7 @@
 }
 
 .moon-icon {
-  color: var(--accent-indigo);
+  color: var(--lavender-soft);
 }
 
 /* User Profile Controls */
@@ -176,8 +177,8 @@
 .profile-chip:hover,
 .profile-chip.active {
   background-color: var(--badge-bg);
-  border-color: var(--primary-300);
-  color: var(--primary-600);
+  border-color: var(--border-strong);
+  color: var(--pink-blush);
 }
 
 .avatar-initial {
@@ -188,9 +189,9 @@
   height: 28px;
   border-radius: var(--radius-full);
   background: var(--primary-gradient);
-  color: #ffffff;
+  color: #10172A;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .user-name-text {
@@ -220,10 +221,6 @@
   border-color: rgba(244, 63, 94, 0.2);
 }
 
-[data-theme='dark'] .btn-logout:hover {
-  background-color: rgba(244, 63, 94, 0.15);
-}
-
 /* Auth Buttons */
 .auth-buttons-group {
   display: flex;
@@ -250,18 +247,19 @@
 
 .btn-ghost-link:hover {
   background-color: var(--bg-surface-subtle);
-  color: var(--primary-500);
+  color: var(--mauve-soft);
 }
 
 .btn-primary-link {
   background: var(--primary-gradient);
-  color: #ffffff;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  color: #10172A;
+  font-weight: 700;
+  box-shadow: 0 2px 10px rgba(201, 154, 203, 0.35);
 }
 
 .btn-primary-link:hover {
   background: var(--primary-gradient-hover);
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 4px 16px rgba(201, 154, 203, 0.5);
   transform: translateY(-1px);
 }
 
@@ -338,7 +336,8 @@
 .mobile-nav-link:hover,
 .mobile-nav-link.active {
   background-color: var(--badge-bg);
-  color: var(--primary-600);
+  color: var(--pink-blush);
+  border: 1px solid var(--badge-border);
   font-weight: 600;
 }
 

@@ -11,7 +11,7 @@
 /* Chat Card Panel */
 .chat-card-panel {
   background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
+  border: 1.5px solid var(--card-border);
   border-radius: var(--radius-2xl);
   box-shadow: var(--card-shadow);
   display: flex;
@@ -38,9 +38,9 @@
   width: 44px;
   height: 44px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
+  background: var(--primary-gradient);
+  color: #10172A;
+  box-shadow: 0 4px 14px rgba(201, 154, 203, 0.35);
   flex-shrink: 0;
 }
 
@@ -70,10 +70,6 @@
   padding: 0.25rem 0.65rem;
   border-radius: var(--radius-full);
   background-color: var(--accent-emerald-light);
-}
-
-[data-theme='dark'] .chat-online-indicator {
-  background-color: rgba(16, 185, 129, 0.15);
 }
 
 .online-dot {
@@ -114,7 +110,8 @@
   height: 64px;
   border-radius: var(--radius-full);
   background: var(--badge-bg);
-  color: var(--primary-500);
+  color: var(--mauve-soft);
+  border: 1px solid var(--badge-border);
   margin-bottom: 1.25rem;
 }
 
@@ -135,11 +132,14 @@
 .starter-prompts-grid {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.75rem;
   width: 100%;
 }
 
 .prompt-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
   background-color: var(--card-bg);
@@ -154,10 +154,39 @@
 }
 
 .prompt-chip:hover {
-  background-color: var(--badge-bg);
-  border-color: var(--primary-300);
-  color: var(--primary-600);
+  background-color: var(--bg-surface-hover);
+  border-color: var(--mauve-soft);
+  color: var(--pink-blush);
   transform: translateX(4px);
+}
+
+.prompt-chip-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.icon-bulb {
+  background-color: rgba(232, 167, 184, 0.15);
+  color: var(--pink-blush);
+}
+
+.icon-quiz {
+  background-color: rgba(201, 154, 203, 0.15);
+  color: var(--mauve-soft);
+}
+
+.icon-explain {
+  background-color: rgba(155, 127, 211, 0.15);
+  color: var(--lavender-primary);
+}
+
+.prompt-chip-text {
+  flex-grow: 1;
 }
 
 /* Message Rows & Bubbles */
@@ -188,8 +217,8 @@
 }
 
 .bot-avatar {
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-  color: #ffffff;
+  background: var(--primary-gradient);
+  color: #10172A;
 }
 
 .chat-bubble {
@@ -203,15 +232,16 @@
 
 .user-bubble {
   background: var(--primary-gradient);
-  color: #ffffff;
+  color: #10172A;
+  font-weight: 500;
   border-bottom-right-radius: 4px;
-  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 3px 12px rgba(201, 154, 203, 0.3);
 }
 
 .bot-bubble {
   background-color: var(--card-bg);
   color: var(--text-primary);
-  border: 1px solid var(--border-default);
+  border: 1px solid var(--card-border);
   border-bottom-left-radius: 4px;
   box-shadow: var(--shadow-sm);
 }
@@ -246,7 +276,7 @@
   }
   40% {
     transform: scale(1);
-    background-color: var(--primary-500);
+    background-color: var(--mauve-soft);
   }
 }
 
@@ -261,10 +291,6 @@
   color: var(--accent-rose);
   font-size: 0.88rem;
   font-weight: 500;
-}
-
-[data-theme='dark'] .chat-error-banner {
-  background-color: rgba(244, 63, 94, 0.15);
 }
 
 /* Input Toolbar */

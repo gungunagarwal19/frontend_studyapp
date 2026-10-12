@@ -50,7 +50,7 @@ const DashboardCards = () => {
             {/* Feature Cards Grid */}
             <div className="workspace-cards-grid">
                 {/* 1. Flashcards Card */}
-                <div 
+                <div
                     className="workspace-feature-card feature-flashcards"
                     onClick={handleFlashCards}
                     role="button"
@@ -59,8 +59,8 @@ const DashboardCards = () => {
                 >
                     <div className="feature-card-badge">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
                         </svg>
                     </div>
                     <div className="feature-pill pill-indigo">Spaced Repetition</div>
@@ -78,7 +78,7 @@ const DashboardCards = () => {
                 </div>
 
                 {/* 2. AI Chat Card */}
-                <div 
+                <div
                     className="workspace-feature-card feature-chat"
                     onClick={handleChat}
                     role="button"
@@ -87,7 +87,7 @@ const DashboardCards = () => {
                 >
                     <div className="feature-card-badge">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                         </svg>
                     </div>
                     <div className="feature-pill pill-purple">AI Study Assistant</div>
@@ -105,7 +105,7 @@ const DashboardCards = () => {
                 </div>
 
                 {/* 3. Upload Material Card */}
-                <div 
+                <div
                     className="workspace-feature-card feature-upload"
                     onClick={handleUpload}
                     role="button"
@@ -114,9 +114,9 @@ const DashboardCards = () => {
                 >
                     <div className="feature-card-badge">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                            <polyline points="17 8 12 3 7 8"/>
-                            <line x1="12" y1="3" x2="12" y2="15"/>
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
                         </svg>
                     </div>
                     <div className="feature-pill pill-emerald">PDF Notes & Docs</div>

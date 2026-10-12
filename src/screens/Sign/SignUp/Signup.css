@@ -10,7 +10,7 @@
   width: 100%;
   max-width: 480px;
   background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
+  border: 1.5px solid var(--card-border);
   border-radius: var(--radius-2xl);
   box-shadow: var(--card-shadow);
   padding: 2.5rem 2.25rem;
@@ -43,6 +43,7 @@
   justify-content: space-between;
   margin-bottom: 2rem;
   padding: 0 0.5rem;
+  position: relative;
 }
 
 .stepper-item {
@@ -79,31 +80,31 @@
 
 .stepper-item.active .stepper-bubble {
   background: var(--primary-gradient);
-  border-color: var(--primary-500);
-  color: #ffffff;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #10172A;
+  box-shadow: 0 0 14px rgba(201, 154, 203, 0.5);
 }
 
 .stepper-item.active .stepper-label {
-  color: var(--primary-500);
+  color: var(--pink-blush);
 }
 
 .stepper-item.completed .stepper-bubble {
-  background-color: var(--accent-emerald);
-  border-color: var(--accent-emerald);
-  color: #ffffff;
+  background: var(--lavender-gradient);
+  border-color: var(--mauve-soft);
+  color: #10172A;
 }
 
 .stepper-item.completed .stepper-label {
-  color: var(--accent-emerald);
+  color: var(--mauve-soft);
 }
 
 .stepper-line {
   flex: 1;
   height: 2px;
   background-color: var(--border-default);
-  margin: 0 0.5rem -1.2rem 0.5rem;
-  transition: background-color var(--transition-fast);
+  margin: -16px 8px 0 8px;
+  transition: background-color var(--transition-normal);
 }
 
 .stepper-line.active {
@@ -116,37 +117,26 @@
   gap: 1.25rem;
 }
 
-.form-step-content {
+.password-requirements-box {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  animation: fadeIn var(--transition-fast);
+  gap: 0.35rem;
 }
 
-/* Alert Error Box */
-.alert-error-box {
+.requirements-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.requirement-item {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.85rem 1rem;
-  border-radius: var(--radius-md);
-  background-color: var(--accent-rose-light);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  color: var(--accent-rose);
-  font-size: 0.88rem;
-  font-weight: 500;
-  line-height: 1.4;
-  animation: fadeIn var(--transition-fast);
-}
-
-[data-theme='dark'] .alert-error-box {
-  background-color: rgba(244, 63, 94, 0.12);
-  border-color: rgba(244, 63, 94, 0.3);
-}
-
-@media (max-width: 480px) {
-  .signup-card-container {
-    padding: 2rem 1.25rem;
-    border-radius: var(--radius-xl);
-  }
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
 }

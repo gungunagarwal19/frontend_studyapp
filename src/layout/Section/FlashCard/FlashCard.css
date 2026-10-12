@@ -9,11 +9,27 @@
 }
 
 .flashcard-hero-header {
-  margin-bottom: 2rem;
+  margin-bottom: 2.25rem;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.flashcard-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  background-color: rgba(155, 127, 211, 0.12);
+  border: 1px solid rgba(201, 154, 203, 0.3);
+  color: var(--mauve-soft);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.85rem;
 }
 
 .flashcard-page-title {
@@ -24,9 +40,16 @@
   margin-bottom: 0.4rem;
 }
 
+.title-gradient-accent {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .flashcard-page-desc {
   font-size: 1.05rem;
   color: var(--text-secondary);
+  max-width: 540px;
 }
 
 .flashcard-stage-container {
@@ -41,28 +64,62 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  perspective: 1000px;
 }
 
-/* 3D Modern Flashcard */
-.modern-flashcard {
-  width: 100%;
-  max-width: 580px;
-  min-height: 320px;
+/* Stacked Physical Flashcard Deck */
+.flashcard-stack-deck {
   position: relative;
+  width: 100%;
+  max-width: 640px;
+  min-height: 330px;
+  perspective: 1200px;
+  margin-bottom: 2rem;
+}
+
+/* Background Deck Layers (Physical Index Card Stack) */
+.card-stack-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-2xl);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-default);
+  pointer-events: none;
+  transition: transform var(--transition-normal);
+}
+
+.stack-layer-1 {
+  transform: translateY(10px) scale(0.98);
+  opacity: 0.65;
+  z-index: 1;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  border-color: rgba(155, 127, 211, 0.18);
+}
+
+.stack-layer-2 {
+  transform: translateY(20px) scale(0.96);
+  opacity: 0.35;
+  z-index: 0;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  border-color: rgba(155, 127, 211, 0.12);
+}
+
+/* Main Interactive 3D Card */
+.modern-flashcard {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 330px;
   transform-style: preserve-3d;
-  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.25s, opacity 0.4s ease;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s, opacity 0.4s ease;
   cursor: pointer;
   border-radius: var(--radius-2xl);
   outline: none;
 }
 
 .modern-flashcard:hover {
-  transform: translateY(-4px);
-}
-
-.modern-flashcard:focus-visible {
-  box-shadow: 0 0 0 3px var(--input-focus-ring);
+  transform: translateY(-3px);
 }
 
 .modern-flashcard.flipped {
@@ -70,27 +127,27 @@
 }
 
 .modern-flashcard.flipped:hover {
-  transform: rotateY(180deg) translateY(-4px);
+  transform: rotateY(180deg) translateY(-3px);
 }
 
 /* Exit Animations */
 .modern-flashcard.exit-right {
-  transform: translateX(120%) rotate(10deg);
+  transform: translateX(120%) rotate(8deg);
   opacity: 0;
 }
 
 .modern-flashcard.exit-left {
-  transform: translateX(-120%) rotate(-10deg);
+  transform: translateX(-120%) rotate(-8deg);
   opacity: 0;
 }
 
 .modern-flashcard.exit-up {
-  transform: translateY(-120%) scale(0.9);
+  transform: translateY(-120%) scale(0.95);
   opacity: 0;
 }
 
 .modern-flashcard.exit-down {
-  transform: translateY(120%) scale(0.9);
+  transform: translateY(120%) scale(0.95);
   opacity: 0;
 }
 
@@ -107,18 +164,18 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid var(--card-border);
-  box-shadow: var(--card-shadow);
+  background-color: var(--card-bg);
+  border: 1.5px solid rgba(201, 154, 203, 0.28);
+  box-shadow: 0 8px 32px -4px rgba(5, 8, 16, 0.8), 0 0 24px -2px rgba(201, 154, 203, 0.16);
+  user-select: none;
 }
 
 .flashcard-front {
-  background-color: var(--card-bg);
-  background-image: radial-gradient(circle at top right, rgba(59, 130, 246, 0.08) 0%, transparent 60%);
+  background-image: radial-gradient(circle at top right, rgba(232, 167, 184, 0.09) 0%, rgba(155, 127, 211, 0.05) 50%, transparent 80%);
 }
 
 .flashcard-back {
-  background-color: var(--card-bg);
-  background-image: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1) 0%, transparent 60%);
+  background-image: radial-gradient(circle at top right, rgba(201, 154, 203, 0.12) 0%, rgba(155, 127, 211, 0.08) 50%, transparent 80%);
   transform: rotateY(180deg);
 }
 
@@ -128,34 +185,47 @@
   justify-content: space-between;
 }
 
-.face-pill {
+.face-ui-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-family: var(--font-heading);
   font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 0.05em;
-  padding: 0.25rem 0.65rem;
-  border-radius: var(--radius-full);
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-sm);
 }
 
-.face-pill-question {
-  background-color: var(--badge-bg);
-  color: var(--primary-600);
+.badge-question {
+  background-color: rgba(232, 167, 184, 0.12);
+  color: var(--pink-blush);
+  border: 1px solid rgba(232, 167, 184, 0.3);
 }
 
-.face-pill-answer {
-  background-color: var(--accent-purple-light);
-  color: var(--accent-purple);
+.badge-answer {
+  background-color: rgba(155, 127, 211, 0.12);
+  color: var(--lavender-soft);
+  border: 1px solid rgba(155, 127, 211, 0.3);
 }
 
-[data-theme='dark'] .face-pill-answer {
-  background-color: rgba(139, 92, 246, 0.15);
-  color: #c4b5fd;
-}
-
-.face-flip-hint {
+.face-flip-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 0.8rem;
-  color: var(--text-muted);
   font-weight: 500;
+  color: var(--text-muted);
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+
+.modern-flashcard:hover .face-flip-control {
+  color: var(--text-primary);
+  border-color: rgba(201, 154, 203, 0.4);
 }
 
 .face-text-content {
@@ -164,152 +234,183 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1.5rem 0;
+  padding: 1.75rem 0.75rem;
 }
 
 .face-text-content p {
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.6;
 }
 
-/* Quick Rating Buttons */
+.card-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.card-side-indicator {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+/* Product-Designed Recall Buttons */
 .card-rating-actions {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0.75rem;
   width: 100%;
-  max-width: 580px;
-  margin-top: 1.75rem;
+  max-width: 640px;
+  margin-top: 0.25rem;
 }
 
 .rating-action-btn {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
-  padding: 0.85rem 0.5rem;
-  border-radius: var(--radius-lg);
+  gap: 0.5rem;
+  padding: 0.85rem 0.65rem;
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-default);
   background-color: var(--card-bg);
   color: var(--text-primary);
   font-family: var(--font-heading);
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
-.rating-action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+.rating-action-btn:active {
+  transform: translateY(1px);
 }
 
-.btn-forgot:hover {
-  border-color: var(--accent-rose);
-  color: var(--accent-rose);
-  background-color: var(--accent-rose-light);
+/* Button 1: Didn't Remember */
+.btn-recall-forgot {
+  color: #f43f5e;
+  border-color: rgba(244, 63, 94, 0.22);
+  background-color: rgba(244, 63, 94, 0.04);
 }
 
-.btn-hard:hover {
-  border-color: var(--accent-amber);
-  color: var(--accent-amber);
-  background-color: var(--accent-amber-light);
+.btn-recall-forgot:hover {
+  background-color: rgba(244, 63, 94, 0.12);
+  border-color: #f43f5e;
+  box-shadow: 0 2px 10px rgba(244, 63, 94, 0.2);
 }
 
-.btn-good:hover {
-  border-color: var(--primary-500);
-  color: var(--primary-500);
-  background-color: var(--badge-bg);
+/* Button 2: Difficult */
+.btn-recall-hard {
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.22);
+  background-color: rgba(245, 158, 11, 0.04);
 }
 
-.btn-perfect:hover {
-  border-color: var(--accent-emerald);
-  color: var(--accent-emerald);
-  background-color: var(--accent-emerald-light);
+.btn-recall-hard:hover {
+  background-color: rgba(245, 158, 11, 0.12);
+  border-color: #f59e0b;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2);
 }
 
-[data-theme='dark'] .btn-forgot:hover {
-  background-color: rgba(244, 63, 94, 0.15);
+/* Button 3: Almost Got It */
+.btn-recall-good {
+  color: var(--mauve-soft);
+  border-color: rgba(201, 154, 203, 0.28);
+  background-color: rgba(201, 154, 203, 0.05);
 }
 
-[data-theme='dark'] .btn-hard:hover {
-  background-color: rgba(245, 158, 11, 0.15);
+.btn-recall-good:hover {
+  background-color: rgba(201, 154, 203, 0.15);
+  border-color: var(--mauve-soft);
+  box-shadow: 0 2px 10px rgba(201, 154, 203, 0.25);
+  color: var(--pink-blush);
 }
 
-[data-theme='dark'] .btn-good:hover {
-  background-color: rgba(59, 130, 246, 0.15);
+/* Button 4: Perfect Recall */
+.btn-recall-perfect {
+  color: var(--lavender-soft);
+  border-color: rgba(155, 127, 211, 0.3);
+  background-color: rgba(155, 127, 211, 0.06);
 }
 
-[data-theme='dark'] .btn-perfect:hover {
-  background-color: rgba(16, 185, 129, 0.15);
+.btn-recall-perfect:hover {
+  background-color: rgba(155, 127, 211, 0.18);
+  border-color: var(--lavender-primary);
+  box-shadow: 0 2px 12px rgba(155, 127, 211, 0.3);
+  color: #ffffff;
 }
 
-.key-kbd {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-/* Keyboard Instructions Legend */
+/* Keyboard Shortcuts Bar */
 .keyboard-instructions-legend {
   margin-top: 1.75rem;
-  padding: 0.75rem 1.25rem;
-  border-radius: var(--radius-full);
+  padding: 0.65rem 1.35rem;
+  border-radius: var(--radius-lg);
   background-color: var(--bg-surface-subtle);
   border: 1px solid var(--border-default);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1.1rem;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .legend-title {
-  font-size: 0.82rem;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
   font-weight: 700;
-  color: var(--text-secondary);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .legend-keys-list {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.95rem;
   flex-wrap: wrap;
 }
 
 .legend-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.8rem;
+  gap: 0.4rem;
+  font-size: 0.84rem;
   color: var(--text-secondary);
 }
 
-.key-badge {
-  display: inline-block;
-  padding: 0.15rem 0.4rem;
-  font-family: inherit;
+/* Real Keyboard Keycap Styling */
+.keycap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.5rem;
+  min-width: 24px;
+  height: 22px;
+  font-family: var(--font-heading);
   font-size: 0.75rem;
   font-weight: 700;
   border-radius: 4px;
   background-color: var(--card-bg);
-  border: 1px solid var(--border-strong);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(201, 154, 203, 0.3);
+  box-shadow: 0 2px 0 rgba(201, 154, 203, 0.25), 0 2px 4px rgba(0, 0, 0, 0.2);
   color: var(--text-primary);
+  line-height: 1;
 }
 
 /* Session Complete Card */
 .flashcard-complete-card {
   text-align: center;
   background-color: var(--card-bg);
-  border: 1px solid var(--card-border);
+  border: 1.5px solid rgba(201, 154, 203, 0.3);
   border-radius: var(--radius-2xl);
   box-shadow: var(--card-shadow);
   padding: 3.5rem 2rem;
-  max-width: 480px;
+  max-width: 500px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -321,12 +422,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   border-radius: var(--radius-full);
   background: var(--primary-gradient);
-  color: #ffffff;
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  color: #10172A;
+  box-shadow: 0 6px 20px rgba(201, 154, 203, 0.4);
   margin-bottom: 1.5rem;
 }
 
@@ -344,13 +445,18 @@
   margin-bottom: 1.75rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .card-rating-actions {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .rating-action-btn {
+    padding: 0.7rem 0.5rem;
   }
 
   .modern-flashcard {
-    min-height: 260px;
+    min-height: 270px;
   }
 
   .face-text-content p {
@@ -358,6 +464,11 @@
   }
 
   .flashcard-face {
-    padding: 1.5rem;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .keyboard-instructions-legend {
+    padding: 0.65rem 0.85rem;
+    gap: 0.65rem;
   }
 }
